@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Bab 4 Vektor | NULL dan NA</title>
+  <meta name="description" content="Bab 4 Vektor | NULL dan NA" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Bab 4 Vektor | NULL dan NA" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Bab 4 Vektor | NULL dan NA" />
+  
+  
+  
+
+<meta name="author" content="Andreas Syaloom Kurniawan" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="menggunakan-readr-dan-fread.html"/>
+<link rel="next" href="list.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Selamat Datang di Semua Tentang R</a></li>
+<li class="chapter" data-level="" data-path="pengantar.html"><a href="pengantar.html"><i class="fa fa-check"></i>Pengantar</a></li>
+<li class="chapter" data-level="1" data-path="settingan-di-r.html"><a href="settingan-di-r.html"><i class="fa fa-check"></i><b>1</b> Settingan di R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="settingan-di-r.html"><a href="settingan-di-r.html#package"><i class="fa fa-check"></i><b>1.1</b> Package</a></li>
+<li class="chapter" data-level="1.2" data-path="settingan-di-r.html"><a href="settingan-di-r.html#dependencies"><i class="fa fa-check"></i><b>1.2</b> Dependencies</a></li>
+<li class="chapter" data-level="1.3" data-path="settingan-di-r.html"><a href="settingan-di-r.html#ir-kernel"><i class="fa fa-check"></i><b>1.3</b> IR Kernel</a></li>
+<li class="chapter" data-level="1.4" data-path="settingan-di-r.html"><a href="settingan-di-r.html#changing-root-folder"><i class="fa fa-check"></i><b>1.4</b> Changing Root Folder</a></li>
+<li class="chapter" data-level="1.5" data-path="settingan-di-r.html"><a href="settingan-di-r.html#installing-other-package"><i class="fa fa-check"></i><b>1.5</b> Installing other package</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="membaca-data.html"><a href="membaca-data.html"><i class="fa fa-check"></i><b>2</b> Membaca Data</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="membaca-data.html"><a href="membaca-data.html#perolehan-data-dari-internet"><i class="fa fa-check"></i><b>2.1</b> Perolehan Data dari Internet</a></li>
+<li class="chapter" data-level="2.2" data-path="membaca-data.html"><a href="membaca-data.html#perintah-read-tabel"><i class="fa fa-check"></i><b>2.2</b> Perintah Read Tabel</a></li>
+<li class="chapter" data-level="2.3" data-path="membaca-data.html"><a href="membaca-data.html#perintah-read-csv"><i class="fa fa-check"></i><b>2.3</b> Perintah Read CSV</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="menggunakan-readr-dan-fread.html"><a href="menggunakan-readr-dan-fread.html"><i class="fa fa-check"></i><b>3</b> Menggunakan <strong>readr</strong> dan <strong>fread</strong></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="menggunakan-readr-dan-fread.html"><a href="menggunakan-readr-dan-fread.html#readr"><i class="fa fa-check"></i><b>3.1</b> readr</a></li>
+<li class="chapter" data-level="3.2" data-path="menggunakan-readr-dan-fread.html"><a href="menggunakan-readr-dan-fread.html#fread"><i class="fa fa-check"></i><b>3.2</b> fread</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="vektor.html"><a href="vektor.html"><i class="fa fa-check"></i><b>4</b> Vektor</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="vektor.html"><a href="vektor.html#membuat-vector"><i class="fa fa-check"></i><b>4.1</b> Membuat Vector</a></li>
+<li class="chapter" data-level="4.2" data-path="vektor.html"><a href="vektor.html#operasi-aritmatika-vector"><i class="fa fa-check"></i><b>4.2</b> Operasi aritmatika vector</a></li>
+<li class="chapter" data-level="4.3" data-path="vektor.html"><a href="vektor.html#coercion"><i class="fa fa-check"></i><b>4.3</b> Coercion</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="list.html"><a href="list.html"><i class="fa fa-check"></i><b>5</b> LIST</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="list.html"><a href="list.html#membuat-list"><i class="fa fa-check"></i><b>5.1</b> Membuat List</a></li>
+<li class="chapter" data-level="5.2" data-path="list.html"><a href="list.html#memberi-nama-elemen-list"><i class="fa fa-check"></i><b>5.2</b> Memberi Nama Elemen List</a></li>
+<li class="chapter" data-level="5.3" data-path="list.html"><a href="list.html#mengakses-list"><i class="fa fa-check"></i><b>5.3</b> Mengakses List</a></li>
+<li class="chapter" data-level="5.4" data-path="list.html"><a href="list.html#memanipulasi-isi-list"><i class="fa fa-check"></i><b>5.4</b> Memanipulasi Isi List</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="factor.html"><a href="factor.html"><i class="fa fa-check"></i><b>6</b> Factor</a></li>
+<li class="chapter" data-level="7" data-path="matrices.html"><a href="matrices.html"><i class="fa fa-check"></i><b>7</b> Matrices</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="matrices.html"><a href="matrices.html#subsetting-a-matrix"><i class="fa fa-check"></i><b>7.1</b> 2. Subsetting a Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="array.html"><a href="array.html"><i class="fa fa-check"></i><b>8</b> Array</a></li>
+<li class="chapter" data-level="9" data-path="fungsi-sprintf.html"><a href="fungsi-sprintf.html"><i class="fa fa-check"></i><b>9</b> Fungsi Sprintf</a></li>
+<li class="chapter" data-level="10" data-path="conditional.html"><a href="conditional.html"><i class="fa fa-check"></i><b>10</b> Conditional</a></li>
+<li class="chapter" data-level="11" data-path="looping.html"><a href="looping.html"><i class="fa fa-check"></i><b>11</b> Looping</a></li>
+<li class="chapter" data-level="12" data-path="loop.html"><a href="loop.html"><i class="fa fa-check"></i><b>12</b> LOOP</a></li>
+<li class="chapter" data-level="13" data-path="data-frames.html"><a href="data-frames.html"><i class="fa fa-check"></i><b>13</b> Data Frames</a></li>
+<li class="chapter" data-level="14" data-path="memanggil-data-frame.html"><a href="memanggil-data-frame.html"><i class="fa fa-check"></i><b>14</b> 2. Memanggil Data Frame</a></li>
+<li class="chapter" data-level="15" data-path="wrangling.html"><a href="wrangling.html"><i class="fa fa-check"></i><b>15</b> WRANGLING</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="wrangling.html"><a href="wrangling.html#colour"><i class="fa fa-check"></i><b>15.1</b> colour</a></li>
+<li class="chapter" data-level="15.2" data-path="wrangling.html"><a href="wrangling.html#fill"><i class="fa fa-check"></i><b>15.2</b> fill</a></li>
+<li class="chapter" data-level="15.3" data-path="wrangling.html"><a href="wrangling.html#group"><i class="fa fa-check"></i><b>15.3</b> group</a></li>
+<li class="chapter" data-level="15.4" data-path="wrangling.html"><a href="wrangling.html#shape"><i class="fa fa-check"></i><b>15.4</b> shape</a></li>
+<li class="chapter" data-level="15.5" data-path="wrangling.html"><a href="wrangling.html#size"><i class="fa fa-check"></i><b>15.5</b> size</a></li>
+<li class="chapter" data-level="15.6" data-path="wrangling.html"><a href="wrangling.html#stroke"><i class="fa fa-check"></i><b>15.6</b> stroke</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="grouping.html"><a href="grouping.html"><i class="fa fa-check"></i><b>16</b> Grouping</a></li>
+<li class="chapter" data-level="17" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>17</b> Tidyverse</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="tidyverse.html"><a href="tidyverse.html#colour-1"><i class="fa fa-check"></i><b>17.1</b> colour</a></li>
+<li class="chapter" data-level="17.2" data-path="tidyverse.html"><a href="tidyverse.html#fill-1"><i class="fa fa-check"></i><b>17.2</b> fill</a></li>
+<li class="chapter" data-level="17.3" data-path="tidyverse.html"><a href="tidyverse.html#group-1"><i class="fa fa-check"></i><b>17.3</b> group</a></li>
+<li class="chapter" data-level="17.4" data-path="tidyverse.html"><a href="tidyverse.html#shape-1"><i class="fa fa-check"></i><b>17.4</b> shape</a></li>
+<li class="chapter" data-level="17.5" data-path="tidyverse.html"><a href="tidyverse.html#size-1"><i class="fa fa-check"></i><b>17.5</b> size</a></li>
+<li class="chapter" data-level="17.6" data-path="tidyverse.html"><a href="tidyverse.html#stroke-1"><i class="fa fa-check"></i><b>17.6</b> stroke</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="null-dan-na.html"><a href="null-dan-na.html"><i class="fa fa-check"></i><b>18</b> NULL dan NA</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">NULL dan NA</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="vektor" class="section level1" number="4">
+<h1><span class="header-section-number">Bab 4</span> Vektor</h1>
+<hr />
+<p>Vektor adalah struktur data (<em>data structure</em>) paling sederhana di R.
+<br>
+Vektor secara singkat dapat disebut sebagai kumpulan data-data (disebut sbg: elemen) dengan <strong>tipe yang sama</strong>. Artinya, kalau numerik maka didalam suatu vektor semuanya harus numerik, kalau karakter harus karakter semua. Nilai-nilai di dalam vektor disimpan secara berurutan sesuai dengan daftar yang kita buat.
+<br>
+Terdapat beberapa jenis vektor:
+<br>
+1. <strong>Vektor Numeric</strong> mengandung data-data bertipe bilangan riil.
+1. <strong>Vektor Integer</strong>, mengandung data-data bertipe bilangan bulat.
+1. <strong>Vektor Logical</strong>, mengandung data-data kebenaran (TRUE and/or FALSE)
+1. <strong>Vektor Character</strong>, mengandung data-data bertipe teks
+1. <strong>Vektor Datetime</strong>, mengandung data-data bertipe waktu dan tanggal.
+1. <strong>Vektor Factors</strong>, a special type of vector to work with categories.</p>
+<p>Dengan menggunakan metode <strong>c()</strong>, kita bisa mengkoleksi semua argumen-argumen untuk membentuk vektor. Seluruh argumen akan dideduksi menjadi satu tipe data bersama, atribut lain selain nama akan dihapus.
+<br>
+<br>
+<span style="color:blue"><strong>WARNING!!!</strong></span>
+<br>
+Vektor disini jangan dikacaukan dengan vektor matematika. Vektor di R tidak ada row dan kolomnya.</p>
+<div id="membuat-vector" class="section level2" number="4.1">
+<h2><span class="header-section-number">4.1</span> Membuat Vector</h2>
+<p>Membuat vector yang bertipe bilangan bulat. Di contoh ini, kita buat suatu vector bernama rv, menggunakan fungsi c(), dan melist anggotnya.</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="vektor.html#cb43-1" aria-hidden="true" tabindex="-1"></a>rv<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb43-2"><a href="vektor.html#cb43-2" aria-hidden="true" tabindex="-1"></a>rv</span>
+<span id="cb43-3"><a href="vektor.html#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(rv)</span>
+<span id="cb43-4"><a href="vektor.html#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(rv)</span></code></pre></div>
+<pre><code>## [1] 2 1 1 2
+## [1] 4
+## [1] &quot;double&quot;</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="vektor.html#cb45-1" aria-hidden="true" tabindex="-1"></a>rx<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">6</span>)</span>
+<span id="cb45-2"><a href="vektor.html#cb45-2" aria-hidden="true" tabindex="-1"></a>rx</span>
+<span id="cb45-3"><a href="vektor.html#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(rx)</span></code></pre></div>
+<pre><code>## [1] 1 2 3 4 5 6
+## [1] &quot;double&quot;</code></pre>
+<p>Membuat vektor berseri, dimulai dari 3 (elemen pertama) hingga maksimum 5 (elemen terakhir) dengan penambahan sebesar 1,75 setiap elememennya.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="vektor.html#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">3</span>,<span class="dv">5</span>, <span class="at">by=</span><span class="fl">1.75</span>) <span class="ot">-&gt;</span>rz</span>
+<span id="cb47-2"><a href="vektor.html#cb47-2" aria-hidden="true" tabindex="-1"></a>rz</span>
+<span id="cb47-3"><a href="vektor.html#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(rz) <span class="co">#sekaligus cek tipe vektor</span></span>
+<span id="cb47-4"><a href="vektor.html#cb47-4" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(rz) <span class="co">#sekaligus cek panjang vektor</span></span></code></pre></div>
+<pre><code>## [1] 3.00 4.75
+## [1] &quot;double&quot;
+## [1] 2</code></pre>
+<p>Membuat vektor yang mirip dengan <strong>rz</strong> namun disini, dimulai dari 7, minimum 1, dengan faktor pengurang -1.</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="vektor.html#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">7</span>,<span class="dv">1</span>, <span class="at">by=</span><span class="sc">-</span><span class="dv">1</span>) <span class="ot">-&gt;</span>ra</span>
+<span id="cb49-2"><a href="vektor.html#cb49-2" aria-hidden="true" tabindex="-1"></a>ra</span>
+<span id="cb49-3"><a href="vektor.html#cb49-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(ra)</span>
+<span id="cb49-4"><a href="vektor.html#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(ra)</span></code></pre></div>
+<pre><code>## [1] 7 6 5 4 3 2 1
+## [1] &quot;double&quot;
+## [1] 7</code></pre>
+<p>Vektor yang elemennya bertipe boolean</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="vektor.html#cb51-1" aria-hidden="true" tabindex="-1"></a>rb<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>) </span>
+<span id="cb51-2"><a href="vektor.html#cb51-2" aria-hidden="true" tabindex="-1"></a>rb</span>
+<span id="cb51-3"><a href="vektor.html#cb51-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(rb)</span>
+<span id="cb51-4"><a href="vektor.html#cb51-4" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(rb)</span></code></pre></div>
+<pre><code>## [1]  TRUE FALSE  TRUE FALSE FALSE
+## [1] &quot;logical&quot;
+## [1] 5</code></pre>
+<p>Vektor yang elemennya bertipe character</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="vektor.html#cb53-1" aria-hidden="true" tabindex="-1"></a>rc<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;Ibu&quot;</span>,<span class="st">&quot;Ayah&quot;</span>,<span class="st">&quot;Adik&quot;</span>,<span class="st">&quot;Kakak&quot;</span>)</span>
+<span id="cb53-2"><a href="vektor.html#cb53-2" aria-hidden="true" tabindex="-1"></a>rc</span>
+<span id="cb53-3"><a href="vektor.html#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(rc)</span>
+<span id="cb53-4"><a href="vektor.html#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(rc)</span>
+<span id="cb53-5"><a href="vektor.html#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(rc)</span></code></pre></div>
+<pre><code>## [1] &quot;Ibu&quot;   &quot;Ayah&quot;  &quot;Adik&quot;  &quot;Kakak&quot;
+## [1] &quot;character&quot;
+##  chr [1:4] &quot;Ibu&quot; &quot;Ayah&quot; &quot;Adik&quot; &quot;Kakak&quot;
+## [1] 4</code></pre>
+<p>Membuat vector dari dua buah vector:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="vektor.html#cb55-1" aria-hidden="true" tabindex="-1"></a>va<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>) </span>
+<span id="cb55-2"><a href="vektor.html#cb55-2" aria-hidden="true" tabindex="-1"></a>vb<span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;aa&quot;</span>, <span class="st">&quot;bb&quot;</span>, <span class="st">&quot;cc&quot;</span>, <span class="st">&quot;dd&quot;</span>, <span class="st">&quot;ee&quot;</span>) </span>
+<span id="cb55-3"><a href="vektor.html#cb55-3" aria-hidden="true" tabindex="-1"></a>vc<span class="ot">&lt;-</span><span class="fu">c</span>(va, vb) </span>
+<span id="cb55-4"><a href="vektor.html#cb55-4" aria-hidden="true" tabindex="-1"></a>vc</span></code></pre></div>
+<pre><code>## [1] &quot;2&quot;  &quot;3&quot;  &quot;5&quot;  &quot;aa&quot; &quot;bb&quot; &quot;cc&quot; &quot;dd&quot; &quot;ee&quot;</code></pre>
+</div>
+<div id="operasi-aritmatika-vector" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> Operasi aritmatika vector</h2>
+<p>Unsur-unsur di dalam vector dapat dioperasikan satu sama lain sehingga menghasilkan vector juga.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="vektor.html#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Vektor rw yang elemennya merupakan rw=2rx+1</span></span>
+<span id="cb57-2"><a href="vektor.html#cb57-2" aria-hidden="true" tabindex="-1"></a>rw<span class="ot">&lt;-</span><span class="dv">2</span><span class="sc">*</span>rx<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb57-3"><a href="vektor.html#cb57-3" aria-hidden="true" tabindex="-1"></a>rw</span>
+<span id="cb57-4"><a href="vektor.html#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(rw)</span>
+<span id="cb57-5"><a href="vektor.html#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(rw)</span></code></pre></div>
+<pre><code>## [1]  3  5  7  9 11 13
+## [1] &quot;double&quot;
+## [1] 6</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="vektor.html#cb59-1" aria-hidden="true" tabindex="-1"></a>ve<span class="ot">&lt;-</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="at">times =</span> <span class="dv">3</span>)</span>
+<span id="cb59-2"><a href="vektor.html#cb59-2" aria-hidden="true" tabindex="-1"></a>ve</span></code></pre></div>
+<pre><code>## [1] 1 1 2 1 1 2 1 1 2</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="vektor.html#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(ve)</span></code></pre></div>
+<pre><code>## [1] &quot;double&quot;</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="vektor.html#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(ve)</span></code></pre></div>
+<pre><code>## [1] 9</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="vektor.html#cb65-1" aria-hidden="true" tabindex="-1"></a>vf<span class="ot">&lt;-</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">7</span>, <span class="dv">2</span>), <span class="at">each =</span> <span class="dv">3</span>)</span>
+<span id="cb65-2"><a href="vektor.html#cb65-2" aria-hidden="true" tabindex="-1"></a>vf</span></code></pre></div>
+<pre><code>## [1] 1 1 1 7 7 7 2 2 2</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="vektor.html#cb67-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(vf)</span></code></pre></div>
+<pre><code>## [1] &quot;double&quot;</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="vektor.html#cb69-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(vf)</span></code></pre></div>
+<pre><code>## [1] 9</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="vektor.html#cb71-1" aria-hidden="true" tabindex="-1"></a>vg<span class="ot">&lt;-</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">9</span>), <span class="at">times =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">4</span>))</span>
+<span id="cb71-2"><a href="vektor.html#cb71-2" aria-hidden="true" tabindex="-1"></a>vg</span></code></pre></div>
+<pre><code>## [1] 3 9 9 9 9</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="vektor.html#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(vg)</span></code></pre></div>
+<pre><code>## [1] &quot;double&quot;</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb75-1"><a href="vektor.html#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(vg)</span></code></pre></div>
+<pre><code>## [1] 5</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="vektor.html#cb77-1" aria-hidden="true" tabindex="-1"></a>vh<span class="ot">&lt;-</span><span class="fu">rep</span>(<span class="dv">5</span><span class="sc">:</span><span class="dv">7</span>,<span class="at">length.out=</span><span class="dv">13</span>)</span>
+<span id="cb77-2"><a href="vektor.html#cb77-2" aria-hidden="true" tabindex="-1"></a>vh</span></code></pre></div>
+<pre><code>##  [1] 5 6 7 5 6 7 5 6 7 5 6 7 5</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb79-1"><a href="vektor.html#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(vh)</span></code></pre></div>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="vektor.html#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(vh)</span></code></pre></div>
+<pre><code>## [1] 13</code></pre>
+</div>
+<div id="coercion" class="section level2" number="4.3">
+<h2><span class="header-section-number">4.3</span> Coercion</h2>
+<hr />
+<p>Peraturan coercion:</p>
+<ol style="list-style-type: decimal">
+<li>Logical values are converted to numbers: TRUE is converted to 1 and FALSE to 0.</li>
+<li>Values are converted to the simplest type required to represent all information.</li>
+<li>The ordering is roughly logical &lt; integer &lt; numeric &lt; complex &lt; character &lt; list.</li>
+<li>Objects of type raw are not converted to other types.</li>
+<li>Object attributes are dropped when an object …</li>
+</ol>
+<p>Misalkan kita memiliki sebuah vektor berisi integer</p>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="vektor.html#cb83-1" aria-hidden="true" tabindex="-1"></a>vl<span class="ot">&lt;-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb83-2"><a href="vektor.html#cb83-2" aria-hidden="true" tabindex="-1"></a>vl</span>
+<span id="cb83-3"><a href="vektor.html#cb83-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(vl)</span>
+<span id="cb83-4"><a href="vektor.html#cb83-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(vl)</span></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10
+## [1] &quot;integer&quot;
+## [1] &quot;integer&quot;</code></pre>
+<p>Kita ubah jadi tipe logic,</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb85-1"><a href="vektor.html#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.logical</span>(vl)</span>
+<span id="cb85-2"><a href="vektor.html#cb85-2" aria-hidden="true" tabindex="-1"></a>vl</span></code></pre></div>
+<pre><code>##  [1] TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE TRUE
+##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<p>Kita ubah jadi bentuk double:</p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="vektor.html#cb87-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.double</span>(vl)</span>
+<span id="cb87-2"><a href="vektor.html#cb87-2" aria-hidden="true" tabindex="-1"></a>vl</span></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10
+##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<p>Kita ubah jadi bentuk karakter:</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="vektor.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.character</span>(vl)</span>
+<span id="cb89-2"><a href="vektor.html#cb89-2" aria-hidden="true" tabindex="-1"></a>vl</span>
+<span id="cb89-3"><a href="vektor.html#cb89-3" aria-hidden="true" tabindex="-1"></a><span class="fu">typeof</span>(vl)</span>
+<span id="cb89-4"><a href="vektor.html#cb89-4" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(vl)</span></code></pre></div>
+<pre><code>##  [1] &quot;1&quot;  &quot;2&quot;  &quot;3&quot;  &quot;4&quot;  &quot;5&quot;  &quot;6&quot;  &quot;7&quot;  &quot;8&quot;  &quot;9&quot;  &quot;10&quot;
+##  [1]  1  2  3  4  5  6  7  8  9 10
+## [1] &quot;integer&quot;
+## [1] &quot;integer&quot;</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="vektor.html#cb91-1" aria-hidden="true" tabindex="-1"></a>vm<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;beng&quot;</span>,<span class="st">&quot;ate&quot;</span>,<span class="st">&quot;guntur&quot;</span>, <span class="st">&quot;angan&quot;</span>, <span class="st">&#39;serser&#39;</span>)</span>
+<span id="cb91-2"><a href="vektor.html#cb91-2" aria-hidden="true" tabindex="-1"></a>vm</span></code></pre></div>
+<pre><code>## [1] &quot;beng&quot;   &quot;ate&quot;    &quot;guntur&quot; &quot;angan&quot;  &quot;serser&quot;</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="vektor.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Pemanggilan vektor dimulai dari elemen nomor 1 (tidak ada elemen 0)</span></span>
+<span id="cb93-2"><a href="vektor.html#cb93-2" aria-hidden="true" tabindex="-1"></a>vm[<span class="dv">1</span>]</span></code></pre></div>
+<pre><code>## [1] &quot;beng&quot;</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="vektor.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Panggil selain</span></span>
+<span id="cb95-2"><a href="vektor.html#cb95-2" aria-hidden="true" tabindex="-1"></a>vm[<span class="sc">-</span><span class="dv">1</span>]</span></code></pre></div>
+<pre><code>## [1] &quot;ate&quot;    &quot;guntur&quot; &quot;angan&quot;  &quot;serser&quot;</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="vektor.html#cb97-1" aria-hidden="true" tabindex="-1"></a>vm[<span class="sc">-</span><span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] &quot;beng&quot;   &quot;guntur&quot; &quot;angan&quot;  &quot;serser&quot;</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="vektor.html#cb99-1" aria-hidden="true" tabindex="-1"></a>vm[[<span class="dv">1</span>]]</span></code></pre></div>
+<pre><code>## [1] &quot;beng&quot;</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="vektor.html#cb101-1" aria-hidden="true" tabindex="-1"></a><span class="co"># memanggil suku ke n dan n+k</span></span>
+<span id="cb101-2"><a href="vektor.html#cb101-2" aria-hidden="true" tabindex="-1"></a>vm[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span></code></pre></div>
+<pre><code>## [1] &quot;beng&quot;   &quot;guntur&quot;</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="vektor.html#cb103-1" aria-hidden="true" tabindex="-1"></a><span class="co"># memanggil suku ke n hingga n+k</span></span>
+<span id="cb103-2"><a href="vektor.html#cb103-2" aria-hidden="true" tabindex="-1"></a>vm[<span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>)]</span></code></pre></div>
+<pre><code>## [1] &quot;beng&quot;   &quot;ate&quot;    &quot;guntur&quot;</code></pre>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="vektor.html#cb105-1" aria-hidden="true" tabindex="-1"></a>vm<span class="sc">&gt;</span><span class="st">&#39;beng&#39;</span></span></code></pre></div>
+<pre><code>## [1] FALSE FALSE  TRUE FALSE  TRUE</code></pre>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="vektor.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Ini kenapa?</span></span>
+<span id="cb107-2"><a href="vektor.html#cb107-2" aria-hidden="true" tabindex="-1"></a>vm[vm<span class="sc">&gt;</span><span class="st">&#39;beng&#39;</span>]</span></code></pre></div>
+<pre><code>## [1] &quot;guntur&quot; &quot;serser&quot;</code></pre>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="vektor.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Subseting kondisional</span></span>
+<span id="cb109-2"><a href="vektor.html#cb109-2" aria-hidden="true" tabindex="-1"></a>vn<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>)</span>
+<span id="cb109-3"><a href="vektor.html#cb109-3" aria-hidden="true" tabindex="-1"></a>vn</span></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10 11</code></pre>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="vektor.html#cb111-1" aria-hidden="true" tabindex="-1"></a>vn[vn<span class="sc">&gt;</span><span class="dv">5</span>]</span></code></pre></div>
+<pre><code>## [1]  6  7  8  9 10 11</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="vektor.html#cb113-1" aria-hidden="true" tabindex="-1"></a>vo <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">a =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">0</span>), <span class="at">b =</span> <span class="dv">787</span>, <span class="at">c =</span> <span class="st">&quot;Airbus 320&quot;</span>)</span>
+<span id="cb113-2"><a href="vektor.html#cb113-2" aria-hidden="true" tabindex="-1"></a>vo</span></code></pre></div>
+<pre><code>## $a
+## [1] 3 2 0
+## 
+## $b
+## [1] 787
+## 
+## $c
+## [1] &quot;Airbus 320&quot;</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="vektor.html#cb115-1" aria-hidden="true" tabindex="-1"></a>vo[<span class="sc">-</span><span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## $a
+## [1] 3 2 0
+## 
+## $c
+## [1] &quot;Airbus 320&quot;</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="vektor.html#cb117-1" aria-hidden="true" tabindex="-1"></a>vo</span></code></pre></div>
+<pre><code>## $a
+## [1] 3 2 0
+## 
+## $b
+## [1] 787
+## 
+## $c
+## [1] &quot;Airbus 320&quot;</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="vektor.html#cb119-1" aria-hidden="true" tabindex="-1"></a>vo</span></code></pre></div>
+<pre><code>## $a
+## [1] 3 2 0
+## 
+## $b
+## [1] 787
+## 
+## $c
+## [1] &quot;Airbus 320&quot;</code></pre>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="vektor.html#cb121-1" aria-hidden="true" tabindex="-1"></a>vo[<span class="dv">2</span>]<span class="ot">&lt;-</span><span class="cn">NULL</span></span>
+<span id="cb121-2"><a href="vektor.html#cb121-2" aria-hidden="true" tabindex="-1"></a>vo</span></code></pre></div>
+<pre><code>## $a
+## [1] 3 2 0
+## 
+## $c
+## [1] &quot;Airbus 320&quot;</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="vektor.html#cb123-1" aria-hidden="true" tabindex="-1"></a>vo[<span class="dv">3</span>]<span class="ot">&lt;-</span><span class="dv">4</span></span>
+<span id="cb123-2"><a href="vektor.html#cb123-2" aria-hidden="true" tabindex="-1"></a>vo</span></code></pre></div>
+<pre><code>## $a
+## [1] 3 2 0
+## 
+## $c
+## [1] &quot;Airbus 320&quot;
+## 
+## [[3]]
+## [1] 4</code></pre>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="vektor.html#cb125-1" aria-hidden="true" tabindex="-1"></a>vo[<span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>)]<span class="ot">=</span><span class="cn">NULL</span></span>
+<span id="cb125-2"><a href="vektor.html#cb125-2" aria-hidden="true" tabindex="-1"></a>vo</span></code></pre></div>
+<pre><code>## $a
+## [1] 3 2 0</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="vektor.html#cb127-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Pembuktian bahwa vektor menyimpan elemen secara berurutan:</span></span>
+<span id="cb127-2"><a href="vektor.html#cb127-2" aria-hidden="true" tabindex="-1"></a>urt1<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;Kambing&quot;</span>, <span class="st">&quot;Ayam&quot;</span>, <span class="st">&quot;Ikan&quot;</span>, <span class="st">&quot;Itik&quot;</span>)</span>
+<span id="cb127-3"><a href="vektor.html#cb127-3" aria-hidden="true" tabindex="-1"></a>urt2<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;Ikan&quot;</span>,<span class="st">&quot;Kambing&quot;</span>, <span class="st">&quot;Ayam&quot;</span>, <span class="st">&quot;Itik&quot;</span>)</span>
+<span id="cb127-4"><a href="vektor.html#cb127-4" aria-hidden="true" tabindex="-1"></a>urt3<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="st">&quot;Kambing&quot;</span>, <span class="st">&quot;Ayam&quot;</span>, <span class="st">&quot;Ikan&quot;</span>, <span class="st">&quot;Itik&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb128-1"><a href="vektor.html#cb128-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Vektor 1 dan 3 dianggap sama karena memiliki susunan dan isi yang benar-benar sama</span></span>
+<span id="cb128-2"><a href="vektor.html#cb128-2" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(urt1<span class="sc">==</span>urt3)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="vektor.html#cb130-1" aria-hidden="true" tabindex="-1"></a>urt1<span class="sc">==</span>urt3</span></code></pre></div>
+<pre><code>## [1] TRUE TRUE TRUE TRUE</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb132-1"><a href="vektor.html#cb132-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Vektor 2 dan 3 tidak dianggap sama karena memiliki susunan berbeda walaupun terdiri atas elemen yang benar-benar sama</span></span>
+<span id="cb132-2"><a href="vektor.html#cb132-2" aria-hidden="true" tabindex="-1"></a><span class="fu">all</span>(urt1<span class="sc">==</span>urt2)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb134-1"><a href="vektor.html#cb134-1" aria-hidden="true" tabindex="-1"></a>urt1<span class="sc">==</span>urt2</span></code></pre></div>
+<pre><code>## [1] FALSE FALSE FALSE  TRUE</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="menggunakan-readr-dan-fread.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="list.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["rwiki.pdf", "rwiki.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

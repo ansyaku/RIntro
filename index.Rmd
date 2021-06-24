@@ -1,0 +1,29 @@
+---
+knit: "bookdown::render_book"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+colorlinks: true
+---
+
+# Selamat Datang di Semua Tentang R {-}
+
+<a href="http://amzn.to/2tZkmxG"><img src="images/cover.png" width="350" height="460" alt="Buy from Amazon" class="cover" /></a>
+
+Berikut adalah laman untuk mengakses kode sumber: [website](http://tidytextmining.com/) for *Text Mining with R*! Visit the [GitHub repository for this site](https://github.com/dgrtwo/tidy-text-mining), find the book at [O'Reilly](http://www.jdoqocy.com/click-4428796-11290546?url=http%3A%2F%2Fshop.oreilly.com%2Fproduct%2F0636920067153.do%3Fcmp%3Daf-strata-books-video-product_cj_0636920067153_%25zp&cjsku=0636920067153), or [buy it on Amazon](http://amzn.to/2tZkmxG).
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png" /></a><br />This work by [Andreas Syaloom Kurniawan](http://ansyaku.live/) is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 United States License</a>.
+
+
+# Pengantar {-}
+
+
+Ini merupakan kertas buram, belum selesai di edit. Baru diupload saja di internet (25/04/2021), rencana akan dirapihkan agar bisa menjadi dokumentasi pembelajaran r. Jadi, ini merupakan live document.
+
+Mengapa kumpulan kertas buram ini dibuat? Bukankah sudah sangat banyak tutorial R di internet, bahkan lebih lengkap! Ya, anda benar sekali. Memang semuanya sudah tersedia di internet. Namun, masalahnya adalah tiap environtment itu berbeda, sama-sama menggunakan R Studio dan menjalankan perintah install.package("tidyverse"), tidak semua berhasil. Pengalaman saya menggunakan R menunjukkan ada paket (selanjutnya paket=package) yang tidak kompatibel dengan versi r, ada yang paketnya tidak mau disimpan ke lokal kita. Ada banyak sekali variasi. Untuk itulah, dokumentasi ini saya buat. Pertama, sebagai dokumentasi pembelajaran R saya. Kedua, sebagai log atas error-error tadi, agar saya tidak perlu mencari ulang solusi dari tiap-tiap masalah.
+
+Oh iya, kadang di buku ini Bahasa Inggris, kadang bahasa Indonesia. Ini tidak dilakukan secara sengaja, melainkan ini merupakan pembelajaran saya dalam kurun waktu 2 bulan. Kadang ketika saya ingin pakai EN ya saya tulis dalam EN.
+
+Semoga bermanfaat bagi saya dan bagi orang-orang lain yang membaca.
+
+Jakarta, 25 April 2020 midnight.

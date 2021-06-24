@@ -1,0 +1,67 @@
+---
+title: "Wrangling"
+author: "Andreas Syaloom Kurniawan"
+date: "4/24/2021"
+output: html_document
+---
+
+# WRANGLING
+Notes:
+sbse - akronim dari saya belum sempat eksplorasi
+## Pemahaman Paket ggplot
+
+Ggplot terdiri dari tiga bagian utama :
+* data di sini data biasanya diambil dari format data frame, bisa berbentuk data frame biasa, tibble ataupun tribble. Namun, di dalam dokumentasi dikatakan bahwa ggplot juga bisa menerima data dalam format lain (*sbse).
+* aes merupakan kepanjangan dari aestethic mapping, biasanya disini diterakan sumbu x, sumbu y, dan beberapa elemen lain (dibahas di bagian selanjutnya).
+* geom_xxx merupakan bagian terakhir dari ggplot, di sini tidak harus geom_point, ada banyak bentuk yang bisa digunakan.
+
+```{test}
+geom_point(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
+```
+
+untuk bagian aesnya r, ggplot memahami:
+
+```
+x
+
+y
+
+alpha
+
+colour
+
+fill
+
+group
+
+shape
+
+size
+
+stroke
+
+```
+
+## colour
+
+Ingat nulisnya "colour" versi british bukan versi american english color.
+Colour yang tersedia adalah sebagai berikut:
+
+## fill
+
+## group
+
+## shape
+
+## size
+
+## stroke

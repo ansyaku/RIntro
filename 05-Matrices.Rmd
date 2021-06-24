@@ -1,0 +1,91 @@
+---
+title: An R Markdown document converted from "Matrices.ipynb"
+output: html_document
+---
+
+# Matrices
+
+```{r}
+ma<-matrix(nrow=2, ncol=3)
+ma
+dim(ma)
+```
+
+```{r}
+mb<-matrix(3:8, nrow=2, ncol=3)
+mb
+dim(mb)
+```
+
+```{r}
+mc<- 3:12
+mc
+class(mc)
+dim(mc)<-c(5,2)
+mc
+class(mc)
+```
+
+```{r}
+md<- 3:12
+md
+class(md)
+dim(md)<-c(2,5)
+md
+class(md)
+```
+
+```{r}
+ga<-2:4
+gi<--1:-3
+me<-cbind(ga,gi)
+me
+class(me)
+```
+
+```{r}
+mf<-rbind(ga,gi)
+mf
+class(mf)
+```
+
+## 2. Subsetting a Matrix
+***
+
+Ketika matrix disubset maka yang dihasilkan adalah vector dengan panjang 1, bukan matriks.
+
+```{r}
+mg<-matrix(1:6,2,3)
+mg
+```
+
+```{r}
+mg[2,3]
+```
+
+```{r}
+mg[2,]
+```
+
+```{r}
+mg[,3]
+```
+
+```{r}
+y<-mg[2,2]
+class(y)
+```
+
+```{r}
+#Subsetting dengan tetap mempertahankan bentuk matrix
+y<-mg[2,2, drop=FALSE]
+z<-mg[1, , drop=FALSE]
+u<-mg[,1 , drop=FALSE]
+y
+class(y)
+z
+class(z)
+u
+class(u)
+```
+

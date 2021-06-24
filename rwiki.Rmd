@@ -1,0 +1,2122 @@
+---
+knit: "bookdown::render_book"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+colorlinks: true
+---
+
+# Selamat Datang di Semua Tentang R {-}
+
+<a href="http://amzn.to/2tZkmxG"><img src="images/cover.png" width="350" height="460" alt="Buy from Amazon" class="cover" /></a>
+
+Berikut adalah laman untuk mengakses kode sumber: [website](http://tidytextmining.com/) for *Text Mining with R*! Visit the [GitHub repository for this site](https://github.com/dgrtwo/tidy-text-mining), find the book at [O'Reilly](http://www.jdoqocy.com/click-4428796-11290546?url=http%3A%2F%2Fshop.oreilly.com%2Fproduct%2F0636920067153.do%3Fcmp%3Daf-strata-books-video-product_cj_0636920067153_%25zp&cjsku=0636920067153), or [buy it on Amazon](http://amzn.to/2tZkmxG).
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/us/88x31.png" /></a><br />This work by [Andreas Syaloom Kurniawan](http://ansyaku.live/) is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/us/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 United States License</a>.
+
+
+# Pengantar {-}
+
+
+Ini merupakan kertas buram, belum selesai di edit. Baru diupload saja di internet (25/04/2021), rencana akan dirapihkan agar bisa menjadi dokumentasi pembelajaran r. Jadi, ini merupakan live document.
+
+Mengapa kumpulan kertas buram ini dibuat? Bukankah sudah sangat banyak tutorial R di internet, bahkan lebih lengkap! Ya, anda benar sekali. Memang semuanya sudah tersedia di internet. Namun, masalahnya adalah tiap environtment itu berbeda, sama-sama menggunakan R Studio dan menjalankan perintah install.package("tidyverse"), tidak semua berhasil. Pengalaman saya menggunakan R menunjukkan ada paket (selanjutnya paket=package) yang tidak kompatibel dengan versi r, ada yang paketnya tidak mau disimpan ke lokal kita. Ada banyak sekali variasi. Untuk itulah, dokumentasi ini saya buat. Pertama, sebagai dokumentasi pembelajaran R saya. Kedua, sebagai log atas error-error tadi, agar saya tidak perlu mencari ulang solusi dari tiap-tiap masalah.
+
+Oh iya, kadang di buku ini Bahasa Inggris, kadang bahasa Indonesia. Ini tidak dilakukan secara sengaja, melainkan ini merupakan pembelajaran saya dalam kurun waktu 2 bulan. Kadang ketika saya ingin pakai EN ya saya tulis dalam EN.
+
+Semoga bermanfaat bagi saya dan bagi orang-orang lain yang membaca.
+
+Jakarta, 25 April 2020 midnight.
+
+<!--chapter:end:index.Rmd-->
+
+---
+title: "Some Important Thing in R"
+author: "Andreas Syaloom Kurniawan"
+date: "4/16/2021"
+output: html_document
+---
+
+# Settingan di R
+
+You can compile R code using R Studio, PyCharm, or using Jupyter Notebook that has been installed with IRKernel.
+
+## Package
+Some package is updated by the author on regular basis in their github repo. It's often that - when one author update his package (package x) (and the most update version has not available on CRAN repo), he use the updated version to update another r package (package y). This condition lead to an awkward condition, specially when package y has been available on CRAN, you take it to your project and after you install it, the system notify that you need package x to install package y. Meanwhile, package x has not been available in CRAN/conda/conda-forge.   
+
+## Dependencies
+It's normal if you want to install your package as soon as possible, but at the end of the day it can turn to a nightmare if you don't read the documentation of the package first. You must uninstall your package, kernel, or even anaconda.
+
+## IR Kernel
+If you use R from Jupyter Notebook, then the best way to install IR Kernel is using the procedure written in IR Kernel github. See: https://irkernel.github.io/installation/
+
+To make it easier i copied and pasted the command here.
+
+* Install R Studio <br/>
+Open your r studio, no need to open your jupyter first. Run this code on the console.
+```{instal irkernel}
+install.packages('IRkernel')
+```
+* Make the kernel available for jupyter <br/>
+Again use your console to run this command
+```{activate the kernel for jupyter}
+#for the current user only
+IRkernel::installspec()
+#for all user
+IRkernel::installspec(user = FALSE)
+```
+To know which r kernel are you use, you can use this command:
+```
+sessionInfo()
+```
+## Changing Root Folder
+
+Open cmd (or Anaconda Prompt) and run
+```
+jupyter notebook --generate-config.
+```
+This writes a file to
+```
+C:\Users\username\.jupyter\jupyter_notebook_config.py.
+```
+Browse to the file location and open it in an Editor
+
+Search for the following line in the file:
+```
+#c.NotebookApp.notebook_dir = ''
+```
+Replace by
+```
+c.NotebookApp.notebook_dir = '/the/path/to/home/folder/'
+```
+
+## Installing other package
+
+Cek dokumentasi di cran versi terakhir versi berapa. 
+Untuk install dari cran yang spesifik gunakan perintah sbb:
+```
+install.packages("tidyverse", repos='https://cloud.r-project.org/')
+```
+
+Waffle
+```
+install.packages("waffle", repos = "https://cinc.rud.is")
+```
+
+<!--chapter:end:01-Settingan.Rmd-->
+
+---
+title: "Memasukkan Data ke R"
+author: "Andreas Syaloom Kurniawan"
+date: "4/16/2021"
+output: html_document
+---
+
+# Membaca Data
+
+------------------------------------------------------------------------
+
+-   **read.table**, **read.csv** untuk membaca data tabular (read.csv identik dengan read.table kecuali separatornya adalah koma sedangkan read.table separatornya spasi).
+-   **readLines** untuk membaca baris per baris pada file teks
+-   **source** untuk membaca file R code (inverse of dump)
+-   **dget** untuk membaca file R code (inverse of dput)
+-   **load** untuk membaca pada workspace yang disimpan
+-   **unserialize** untuk membaca satu R objek dalam bentuk biner
+
+Argumen-argumen pada fungsi read.table: \* **file**, nama fie/koneksi \* **header**, logikal mengindikasikan apakah file memiliki baris header \* **sep** \* **colClasses** \* **nrows**, jumlah baris pada dataset \* **comment.char** \* **skip**, jumlah baris yang dilewatkan dari awal \* **stringsAsFactors**
+
+Jika besar dataset\> besar RAM gak usah dilanjutin.
+
+```{r}
+x<-c("Kabanjahe","Medan","Siantar", "Samosir","Balige","Labuhan Batu","Padang Sidempuan","Rantau Prapat")
+y<-list(TRUE,FALSE,TRUE,TRUE,TRUE,FALSE,TRUE,FALSE)
+z<-c(1,2,3,4,5,6,7,8,9,0)
+dump(c("x","y","z"), file="contoh_file_dump.R")
+```
+
+Koneksi ke file: \*\*\*
+
+-   **file** membuka koneksi ke file
+-   **gzfile** membuka koneksi ke file yang dikompres dalam bentuk gzip
+-   **bzfile** membuka koneksi ke file yang dikompres dalam bentuk bzip2
+-   **url** membuka koneksi ke webpage
+
+```{r}
+#con<-file()
+#data<-read.csv()
+#close(con)
+```
+
+```{r}
+library(help="datasets")
+```
+
+```{r}
+head(ChickWeight)
+```
+
+Consider the data set ice.river, which is in the contributed package tseries by Trapletti and Hornik (2013). First, you have to install the package, which you can do by running the line install.packages("tseries")
+
+```{r}
+#install.packages("tseries")
+#library("tseries")
+```
+
+```{r}
+#library(help="tseries")
+```
+
+```{r}
+#data<-read.csv("MRI.csv", header=FALSE)
+#head(data)
+```
+
+```{r}
+# data.url<-read.table("http://courses.washington.edu/b517/Datasets/BirthsKingCounty2001.txt", fill = TRUE)
+# head(data.url, n=2)
+```
+
+## Perolehan Data dari Internet
+
+------------------------------------------------------------------------
+
+Penting untuk diperhatikan: Perolehan data dari internet secara langsung menghindarkan kita dari kesalahan ketik data (bila harus diketik ulang). Namun, penting untuk diingat data dari internet bisa berubah-ubah untuk itu perlu untuk membuat catatan data yang diperoleh itu diambil per kapan. Adapun cara untuk mengambil data dari internet secara langsung adalah sebagai berikut:
+
+```{r}
+# Cari url dimana data tersedia, setelah itu gunakan perintah browseURL
+# untuk memastikan bahwa perangkat anda terkoneksi ke internet dan link unduh data tersebut berfungsi
+# perintah ini akan membuka jendela baru
+# browseURL("https://archive.ics.uci.edu/ml/")
+```
+
+```{r}
+# Gunakan perintah download.file(url, nama text file yang mau disimpan) untuk mengunduh data langsung ke folder root
+# web="https://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data"
+# download.file(web, "Testing.txt")
+```
+
+## Perintah Read Tabel
+
+------------------------------------------------------------------------
+
+```{r}
+#read.table("file",
+#  header = FALSE,
+#  sep = "",
+#  quote = "\"'",
+#  dec = ".",
+#  row.names, col.names,            
+#  na.strings = "NA",
+#  fill = !blank.lines.skip,
+#  skipNul = FALSE)
+```
+
+Beberapa yang penting:
+
+1.  **filename** - Nama file
+2.  **sep** - pemisah antar kolom
+3.  **skipNul** tipe: logical: , apakah kolom berisi NULL diabaikan
+4.  **fill** tipe: logical. If TRUE then in case the rows have unequal length, blank fields are implicitly added. See 'Details'.
+5.  **nrows** integer: jumlah baris yang ingin dibaca
+6.  **na.strings** a character vector of strings which are to be interpreted as NA values. Blank fields are also considered to be missing values in logical, integer, numeric and complex fields. Note that the test happens after white space is stripped from the input, so na.strings values may need their own white space stripped in advance.
+7.  **col.names** vektor yang berisikan nama (opsional) bagi variabel.
+8.  **dec** karakter yang digunakan sebagai pemisah untuk desimal
+
+## Perintah Read CSV
+
+------------------------------------------------------------------------
+
+```{r}
+# read_csv(
+#  "filename",
+#  sep = ",",
+#  na.strings = c("NA", "-"),
+#  comment.char = "#",
+#  transpose = FALSE,
+#  rownames_included = TRUE
+#)
+```
+
+Keterangan :
+
+1.  **filename** - Nama file
+2.  **sep** - pemisah antar kolom
+3.  **na.string** - na mau diganti apa
+4.  **transpose**
+5.  **rownames_included**
+
+# Menggunakan __readr__ dan __fread__
+
+## readr
+Readr merupakan salah satu paket (bisa digunakan dengan memanggil readr atau memanggil tidyverse). 
+
+```{r, template readr, eval=FALSE}
+read_delim(
+  file,
+  delim,
+  quote = "\"",
+  escape_backslash = FALSE,
+  escape_double = TRUE,
+  col_names = TRUE,
+  col_types = NULL,
+  locale = default_locale(),
+  na = c("", "NA"),
+  quoted_na = TRUE,
+  comment = "",
+  trim_ws = FALSE,
+  skip = 0,
+  n_max = Inf,
+  guess_max = min(1000, n_max),
+  progress = show_progress(),
+  skip_empty_rows = TRUE
+)
+
+read_csv(
+  file,
+  col_names = TRUE,
+  col_types = NULL,
+  locale = default_locale(),
+  na = c("", "NA"),
+  quoted_na = TRUE,
+  quote = "\"",
+  comment = "",
+  trim_ws = TRUE,
+  skip = 0,
+  n_max = Inf,
+  guess_max = min(1000, n_max),
+  progress = show_progress(),
+  skip_empty_rows = TRUE
+)
+```
+
+Tidak perlu menspesifikasi lagi __header=TRUE__, __stringsAsFactor=TRUE__, karena secara defaul readr sudah mengakomodasi itu. Readr akan mengkonversi data ke dalam bentuk tibble. 
+
+```{r, baca data readr, results = 'hold'}
+library(tidyverse)
+mtcars <- read_csv(readr_example("mtcars.csv"))
+```
+Dapat dilihat, saat kita memanggil suatu data dengan readr (read_csv), maka akan ditampilkan tipe dari setiap kolom yang ada.
+
+Selain itu, kita bisa juga melakukan skip terhadap baris ke sekian hingga sekian, misalkan ambil dari baris ke 7 hingga 17. Ini dilakukan dengan parameter  __skip__ dan __n_max__.
+
+
+```{r, limitasi row, include=TRUE, results = 'hold'}
+mtcars <- read_csv("mtcars.csv", skip = 2, n_max = 17)
+head(mtcars)
+```
+Ada beberapa macam perintah pemanggilan yang dapat digunakan untuk readr, antara lain:
+
+```{jenis baca data dengan readr}
+# fungsinya mirip dengan read.delim di base r
+read_delim
+# fungsinya mirip dengan read.csv di base r
+read_csv
+# untuk mebaca tab separated value
+read_tsv
+```
+## fread
+
+fread ditulis oleh Matt Dowle dan Arun Srinivasan. Fread dapat dilihat pada  https://github.com/Rdatatable/data.table
+
+```{r, fread-default, eval=FALSE}
+fread(input, file, text, cmd, sep="auto", sep2="auto", dec=".", quote="\"",
+nrows=Inf, col.names,
+check.names=FALSE, encoding="unknown",
+strip.white=TRUE, fill=FALSE, blank.lines.skip=FALSE)
+# lengkapnya bs dilihat di dokumentasi fread
+```
+
+Fread dapat dipanggil dengan:
+```{r, panggil, include=TRUE, results = 'hold'}
+library(data.table)
+k22<-fread("mtcars.csv", nrows=5)
+head(k22)
+```
+
+<!--chapter:end:02-Bacadata.Rmd-->
+
+---
+title: Vector
+author: "Andreas Syaloom Kurniawan"
+date: "4/24/2021"
+output: html_document
+---
+
+# Vektor
+***
+
+Vektor adalah struktur data (*data structure*) paling sederhana di R.
+<br>
+Vektor secara singkat dapat disebut sebagai kumpulan data-data (disebut sbg: elemen) dengan __tipe yang sama__. Artinya, kalau numerik maka didalam suatu vektor semuanya harus numerik, kalau karakter harus karakter semua. Nilai-nilai di dalam vektor disimpan secara berurutan sesuai dengan daftar yang kita buat. 
+<br>
+Terdapat beberapa jenis vektor:
+<br>
+1. __Vektor Numeric__ mengandung data-data bertipe bilangan riil.
+1. __Vektor Integer__, mengandung data-data bertipe bilangan bulat.
+1. __Vektor Logical__, mengandung data-data kebenaran (TRUE and/or FALSE)
+1. __Vektor Character__, mengandung data-data bertipe teks
+1. __Vektor Datetime__, mengandung data-data bertipe waktu dan tanggal.
+1. __Vektor Factors__, a special type of vector to work with categories.
+
+Dengan menggunakan metode __c()__, kita bisa mengkoleksi semua argumen-argumen untuk membentuk vektor. Seluruh argumen akan dideduksi menjadi satu tipe data bersama, atribut lain selain nama akan dihapus.
+<br>
+<br>
+<span style="color:blue">__WARNING!!!__</span>
+<br>
+Vektor disini jangan dikacaukan dengan vektor matematika. Vektor di R tidak ada row dan kolomnya.
+
+## Membuat Vector
+Membuat vector yang bertipe bilangan bulat. Di contoh ini, kita buat suatu vector bernama rv, menggunakan fungsi c(), dan melist anggotnya.
+```{r, intvect, include=TRUE, results = 'hold'}
+rv<-c(2, 1, 1, 2)
+rv
+length(rv)
+typeof(rv)
+```
+
+```{r, intvect2, include=TRUE, results='hold'}
+rx<-c(1,2,3,4,5,6)
+rx
+typeof(rx)
+```
+Membuat vektor berseri, dimulai dari 3 (elemen pertama) hingga maksimum 5 (elemen terakhir) dengan penambahan sebesar 1,75 setiap elememennya.
+```{r, serievect, include=TRUE, results = 'hold'}
+seq(3,5, by=1.75) ->rz
+rz
+typeof(rz) #sekaligus cek tipe vektor
+length(rz) #sekaligus cek panjang vektor
+```
+Membuat vektor yang mirip dengan __rz__ namun disini, dimulai dari 7, minimum 1, dengan faktor pengurang -1.
+```{r, serievect2, include=TRUE, results = 'hold'}
+seq(7,1, by=-1) ->ra
+ra
+typeof(ra)
+length(ra)
+```
+Vektor yang elemennya bertipe boolean
+```{r, booleant, include=TRUE, results = 'hold'}
+rb<-c(TRUE, FALSE, TRUE, FALSE, FALSE) 
+rb
+typeof(rb)
+length(rb)
+```
+Vektor yang elemennya bertipe character
+```{r, charr, include=TRUE, results = 'hold'}
+rc<-c("Ibu","Ayah","Adik","Kakak")
+rc
+typeof(rc)
+str(rc)
+length(rc)
+```
+Membuat vector dari dua buah vector:
+```{r, gen2vect, include=TRUE, results = 'hold'}
+va<- c(2, 3, 5) 
+vb<- c("aa", "bb", "cc", "dd", "ee") 
+vc<-c(va, vb) 
+vc
+```
+
+
+## Operasi aritmatika vector
+
+Unsur-unsur di dalam vector dapat dioperasikan satu sama lain sehingga menghasilkan vector juga. 
+
+```{r, vectmult, include=TRUE, results = 'hold'}
+#Vektor rw yang elemennya merupakan rw=2rx+1
+rw<-2*rx+1
+rw
+typeof(rw)
+length(rw)
+```
+
+```{r}
+ve<-rep(c(1, 1, 2), times = 3)
+ve
+typeof(ve)
+length(ve)
+```
+
+```{r}
+vf<-rep(c(1, 7, 2), each = 3)
+vf
+typeof(vf)
+length(vf)
+```
+
+```{r}
+vg<-rep(c(3, 9), times = c(1,4))
+vg
+typeof(vg)
+length(vg)
+```
+
+```{r}
+vh<-rep(5:7,length.out=13)
+vh
+typeof(vh)
+length(vh)
+```
+
+
+## Coercion
+***
+
+Peraturan coercion:
+
+1. Logical values are converted to numbers: TRUE is converted to 1 and FALSE to 0.
+1. Values are converted to the simplest type required to represent all information.
+1. The ordering is roughly logical < integer < numeric < complex < character < list.
+1. Objects of type raw are not converted to other types.
+1. Object attributes are dropped when an object ...
+
+Misalkan kita memiliki sebuah vektor berisi integer
+```{r, tint, include=TRUE, results = 'hold'}
+vl<-1:10
+vl
+typeof(vl)
+class(vl)
+```
+Kita ubah jadi tipe logic,
+```{r, tlogic, include=TRUE, results = 'hold'}
+as.logical(vl)
+vl
+```
+
+Kita ubah jadi bentuk double:
+```{r, tdouble, include=TRUE, results = 'hold'}
+as.double(vl)
+vl
+```
+
+Kita ubah jadi bentuk karakter:
+```{r, tchar,  include=TRUE, results = 'hold'}
+as.character(vl)
+vl
+typeof(vl)
+class(vl)
+```
+
+```{r}
+vm<-c("beng","ate","guntur", "angan", 'serser')
+vm
+```
+
+```{r}
+#Pemanggilan vektor dimulai dari elemen nomor 1 (tidak ada elemen 0)
+vm[1]
+```
+
+```{r}
+#Panggil selain
+vm[-1]
+```
+
+```{r}
+vm[-2]
+```
+
+```{r}
+vm[[1]]
+```
+
+```{r}
+# memanggil suku ke n dan n+k
+vm[c(1,3)]
+```
+
+```{r}
+# memanggil suku ke n hingga n+k
+vm[c(1:3)]
+```
+
+```{r}
+vm>'beng'
+```
+
+```{r}
+# Ini kenapa?
+vm[vm>'beng']
+```
+
+```{r}
+# Subseting kondisional
+vn<-c(1:11)
+vn
+```
+
+```{r}
+vn[vn>5]
+```
+
+```{r}
+vo <- list(a = c(3, 2, 0), b = 787, c = "Airbus 320")
+vo
+```
+
+```{r}
+vo[-2]
+vo
+```
+
+```{r}
+vo
+```
+
+```{r}
+vo[2]<-NULL
+vo
+```
+
+```{r}
+vo[3]<-4
+vo
+```
+
+```{r}
+vo[c(2,3)]=NULL
+vo
+```
+
+```{r}
+# Pembuktian bahwa vektor menyimpan elemen secara berurutan:
+urt1<-c("Kambing", "Ayam", "Ikan", "Itik")
+urt2<-c("Ikan","Kambing", "Ayam", "Itik")
+urt3<-c("Kambing", "Ayam", "Ikan", "Itik")
+```
+
+```{r}
+#Vektor 1 dan 3 dianggap sama karena memiliki susunan dan isi yang benar-benar sama
+all(urt1==urt3)
+urt1==urt3
+```
+
+```{r}
+#Vektor 2 dan 3 tidak dianggap sama karena memiliki susunan berbeda walaupun terdiri atas elemen yang benar-benar sama
+all(urt1==urt2)
+urt1==urt2
+```
+
+
+<!--chapter:end:03-Vector.Rmd-->
+
+---
+title: An R Markdown document converted from "List.ipynb"
+output: html_document
+---
+
+# LIST
+***
+Vektor yang semua elemennya memiliki tipe data yang sama disebut *__atomic vector__*, <br>.
+*__List__* mirip dengan vektor namun elemen-elemennya boleh terdiri dari beberapa tipe data.
+
+## Membuat List
+***
+
+```{r, makema, include=TRUE, results = 'hold'}
+ma<-list(1,'ayam', TRUE, 1+2i )
+ma
+typeof(ma)
+```
+Membuat list dengan series (barisan bilangan)
+```{r, makembmc, include=TRUE, results = 'hold'}
+mb<-list(letters[1:3])
+mb
+mc<-list(1:7)
+mc
+```
+Membuat list dengan series (barisan bilangan dengan faktor pertumbuhan tertentu)
+```{r, makemd, include=TRUE, results = 'hold'}
+#Contoh: series dimulai dari 1 maksimum 11 dengan pertambahan 3
+md<-list(seq(1, 11, by=3))
+md
+typeof(md)
+```
+List juga dapat dibuat dari vektor-vektor lain
+```{r, makeme, include=TRUE, results = 'hold'}
+#List dapat dibuat dari 3 vektor integer, character, dan boolean
+me<-c(1:3)
+typeof(me)
+mf<-c("ayam","ikan","tempe","tahu")
+mg<-c(TRUE, FALSE, TRUE, TRUE)
+mh<-list(me,mf,mg)
+mh
+typeof(mh)
+```
+
+List dapat dibuat dari list-list lain (merging list)
+```{r, makelists, include=TRUE, results = 'hold'}
+mi<-list('dolar','yen','rupiah','renmimbi')
+mj<-list(14000,3500,14300,350)
+mk<-list(mi,mj)
+mk
+typeof(mk)
+```
+
+## Memberi Nama Elemen List
+***
+
+```{r}
+# MEMBERI NAMA LIST
+# Pada list ini elemen list diberi nama gt, rt, dan nt
+ml <- list(sibirong = matrix(1:6, nrow = 2), 
+          sibontar = letters[3:5], 
+          sigerger = c(1:5)) 
+ml
+```
+
+```{r}
+names(ml)
+```
+
+```{r}
+mm<- list(a="one", b="two", c=c(1:3))
+names(mm)
+```
+
+```{r}
+#Melakukan assign nama dengan jumlah yang sama dengan jumlah nama awal
+names(mm) <- c("sada", "dua", "tolu")
+print(mm)
+```
+
+```{r}
+mn<- list("bata","carvil",letters[1:3])
+print(mn)
+names(mn)
+```
+
+```{r}
+#Melakukan assign nama ke satu list, dengan jumlah anggota sama dengan nama
+names(mn)<-c("par","pir","per")
+print(mn)
+```
+
+```{r}
+#Melakukan assign nama ke satu list, dengan jumlah nama kurang dari jumlah anggota
+names(mn)<-c("psr","ptr")
+print(mn)
+names(mn)
+```
+
+```{r}
+#Melakukan assign nama ke satu list, dengan jumlah nama lebih dari jumlah anggota [FAILED]
+#names(mn)<-c("psr","ptr","ppr","pkr")
+#print(mn)
+#names(mn)
+```
+
+## Mengakses List
+***
+Misalkan terdapat suatu list
+```{r, lista, include=TRUE, results='hold'}
+mo<-list("kuda",'ayam','anjing','babi')
+mp<-list(a="kuda", b=x<-c(1,2,3), c="TRUE")
+str(mo)
+str(mp)
+```
+
+Mengakses elemen kedua dari list
+```{r, elemen2, include=TRUE, results='hold'}
+#mengakses elemen kedua
+mo[2]
+mp[2]
+```
+
+```{r}
+mo[[2]]
+mp[[2]]
+```
+Mengakses elemen k hingga ke n+k
+```{r, akslist, include=TRUE, results='hold'}
+mo[c(1,4)]
+mp[c(1,2)]
+```
+
+```{r}
+#Bagaimana mengakses isi list yang ada di dalam list ?
+```
+
+## Memanipulasi Isi List
+***
+
+```{r}
+ x[[2]][1]='susu'
+ x
+```
+
+```{r}
+x[c(2, 4)]
+```
+
+```{r}
+print(x)
+```
+
+```{r}
+print(x[2])
+```
+
+```{r}
+#ka$gt<-list('7','1','7','1','6')
+#ka
+```
+
+```{r}
+# Cara lain memberi nama gt, rt, dan nt
+#ka <- list(matrix(1:6, nrow = 2), 
+#          letters[3:5], 
+ #         c(1:5)) 
+#names(ka) <- c("Maruhum", "Bonar", "Sirait")
+#ka
+```
+
+```{r}
+#Add an element at the end of the list.
+#ka[4] <- list("Nubie","Bontar Muka", "Kumis Bolon")
+```
+
+```{r}
+#ka
+```
+
+```{r}
+#Converting List to Vector
+```
+
+```{r}
+#modify a list in R?
+```
+
+```{r}
+
+# Add element at the end of the list.
+#list_data[4] <- "New element"
+#print(list_data[4])
+
+# Remove the last element.
+#list_data[4] <- NULL
+
+# Print the 4th Element.
+#print(list_data[4])
+
+# Update the 3rd Element.
+```
+
+**Subsetting**
+***
+
+```{r}
+x<-c('Miami',"Chicago", "New York", "Massacushets")
+x[2]
+x[1:3]
+x[x>"Chicago"]
+```
+
+```{r}
+y<-list(makrobar=1:6, bar=0.7)
+y
+```
+
+```{r}
+y[1]
+```
+
+```{r}
+y[2]
+```
+
+```{r}
+y[["makrobar"]]
+y
+```
+
+<!--chapter:end:04-List.Rmd-->
+
+---
+title: An R Markdown document converted from "Factor.ipynb"
+output: html_document
+---
+
+# Factor
+***
+
+Digunakan untuk merepresentasikan data kategorikal atau ordinal.
+* Factor bisa unordered atau ordered.
+* Factor ini menyimpan informasi lain disebut __Levels__ yang merupakan informasi elemen unik yang ada pada factor beserta urutannya.
+Factor bisa dibayangkan sebagai vector integer yang memiliki label.
+
+```{r, fa, include=TRUE, results='hold'}
+fa<-factor(c("iya","enggak","enggak","enggak","iya","enggak","iya"))
+fa
+```
+Perhatikan level nya, hanya ada dua yakni "iya" dan "enggak".
+Apabila kita ingin mengetahui rekapan dari isi faktor bisa menggunakan perintah berikut:
+```{r, tabelfa, include=TRUE, results='hold'}
+table(fa)
+```
+Kategori yang ada pada level tersebut sebenarnya disimpan dalam bentuk integer, seperti bisa dilihat pada hasil panggilan berikut:
+```{r, unclas, include=TRUE, results='hold'}
+unclass(fa)
+# iya disimbolkan sebagai 2, enggak sebagai 1
+```
+
+```{r}
+#attr(,"levels")
+```
+
+Kita bisa menentukan levelnya, siapa yang pertama siapa yang kedua, dst. Hal ini dilakukan dengan mendefinisikan level, sbb:
+```{r, deflvl, include=TRUE, results='hold'}
+fb<-factor(c("iya","enggak","enggak","enggak","iya","enggak","iya"), levels=c("iya","enggak"))
+fb
+```
+
+```{r}
+unclass(fb)
+# Jika levelsnya ditentukan, maka yang pertama akan dikoding menjadi lebih awal dari yang kedua
+```
+
+```{r}
+fa1<-factor(c("SD", "SMP", "SMA", "SMP"), levels=c("SD", "SMP", "SMA"))
+fa2<-factor(c("SD", "SMP", "SMA", "SMP"), levels=c("SD", "SMP", "SMA", "PT"))
+fa3<-factor(c("SD", "SMP", "SMA", "SMP", "SD", "SD","SMA","SD"), levels=c("SD", "SMP", "SMA", "PT"), ordered=TRUE)
+```
+
+```{r}
+fa1
+```
+
+```{r}
+# Kita bisa menambah levels walaupun data terkait levels itu belum ada, 
+# fungsinya kita bisa saja suatu saat menambah anggota fa2 tanpa perlu mengubah levels
+fa2
+```
+
+```{r}
+#Di sini levels telah berurut
+fa3
+```
+
+<!--chapter:end:05-Factor.Rmd-->
+
+---
+title: An R Markdown document converted from "Matrices.ipynb"
+output: html_document
+---
+
+# Matrices
+
+```{r}
+ma<-matrix(nrow=2, ncol=3)
+ma
+dim(ma)
+```
+
+```{r}
+mb<-matrix(3:8, nrow=2, ncol=3)
+mb
+dim(mb)
+```
+
+```{r}
+mc<- 3:12
+mc
+class(mc)
+dim(mc)<-c(5,2)
+mc
+class(mc)
+```
+
+```{r}
+md<- 3:12
+md
+class(md)
+dim(md)<-c(2,5)
+md
+class(md)
+```
+
+```{r}
+ga<-2:4
+gi<--1:-3
+me<-cbind(ga,gi)
+me
+class(me)
+```
+
+```{r}
+mf<-rbind(ga,gi)
+mf
+class(mf)
+```
+
+## 2. Subsetting a Matrix
+***
+
+Ketika matrix disubset maka yang dihasilkan adalah vector dengan panjang 1, bukan matriks.
+
+```{r}
+mg<-matrix(1:6,2,3)
+mg
+```
+
+```{r}
+mg[2,3]
+```
+
+```{r}
+mg[2,]
+```
+
+```{r}
+mg[,3]
+```
+
+```{r}
+y<-mg[2,2]
+class(y)
+```
+
+```{r}
+#Subsetting dengan tetap mempertahankan bentuk matrix
+y<-mg[2,2, drop=FALSE]
+z<-mg[1, , drop=FALSE]
+u<-mg[,1 , drop=FALSE]
+y
+class(y)
+z
+class(z)
+u
+class(u)
+```
+
+
+<!--chapter:end:05-Matrices.Rmd-->
+
+---
+title: An R Markdown document converted from "Array.ipynb"
+output: html_document
+---
+
+# Array
+***
+
+Array adalah vektor multidimensional. Semua elemennya harus berasal dari tipe yang sama.
+Perbedaan array dan matrice adalah matrice hanya dapat digunakan dua dimensi.
+
+```{r}
+aa<-array(1:24, dim=c(2,3,4))
+aa
+class(aa)
+```
+
+
+<!--chapter:end:06-Array.Rmd-->
+
+---
+title: An R Markdown document converted from "Function.ipynb"
+output: html_document
+---
+
+# Fungsi Sprintf
+***
+
+```{r}
+sprintf("Hachi suka makan %s, karena dia benci %s","Kucing", "Monyet")
+```
+
+```{r}
+sprintf("%s suka makan %s, karena dia benci %s","Kakaktua", "Tahu", "Tempe")
+```
+
+```{r}
+toktok<-function(apaini, apaitu)
+    {
+    print(sprintf("%s suka makan %s", apaini, apaitu))
+}
+```
+
+```{r}
+toktok("Kucing", "Telor Puyuh Rebus Warmindo")
+```
+
+```{r}
+toktok("Bapak", "makanan terlarang seperti sayap kelelawar")
+```
+
+```{r}
+# Nilai default
+tiktik<-function(apaini, apaitu="goreng pisang")
+    {
+    print(sprintf("%s suka makan %s", apaini, apaitu))
+}
+```
+
+```{r}
+tiktik("Geronimo")
+```
+
+```{r}
+#Fungsi dengan return ataupun tidak dengan return.
+#Fungsi dengan return biasanya fungsi yang menghasilkan list.
+```
+
+```{r}
+kembalikan.ini<-function(angka1, angka2){
+    angka1^2-angka2^2+1
+}
+```
+
+```{r}
+kembalikan.ini(4,3)
+```
+
+```{r}
+kembalikan.itu<-function(angka1, angka2){
+    return (angka1^2-angka2^2+1)
+}
+```
+
+```{r}
+kembalikan.itu(4,3)
+```
+
+```{r}
+# Fungsi do.call
+```
+
+```{r}
+lakukan.ini<-function(x,func=mean){
+    do.call(func,args=list(x))
+}
+```
+
+```{r}
+lakukan.ini(1:1000)
+```
+
+```{r}
+angka<-c(3,5,6,8,99,9,3,4,5)
+lakukan.ini(angka)
+```
+
+```{r}
+lakukan.ini(angka, sum)
+```
+
+```{r}
+# nulis function juga gak mesti kurawal, bisa ke samping aja
+rumus_mean<-function(x) sum(x)/length(x)
+nilai_math<-c(5,6,7,8,90,3,2,4)
+rumus_mean(nilai_math)
+```
+
+```{r}
+rumus_luas_lingkaran<-function(r) (22/7)*r*r
+jejari<-c(14)
+rumus_luas_lingkaran(jejari)
+```
+
+```{r}
+#atau bisa menggunakan fungsi built in yang udah ada
+mean(nilai_math)
+```
+
+<!--chapter:end:07-Function.Rmd-->
+
+---
+title: An R Markdown document converted from "Conditional.ipynb"
+output: html_document
+---
+# Conditional
+
+Kondisikonal adalah
+
+<!--chapter:end:08-Conditional.Rmd-->
+
+---
+title: An R Markdown document converted from "Looping.ipynb"
+output: html_document
+---
+
+# Looping
+
+Loping adalah
+
+<!--chapter:end:08-Looping.Rmd-->
+
+---
+title: Looping2
+output: html_document
+---
+
+# LOOP
+```{r}
+n<-31
+fib<-vector("numeric", length=n)
+fib[1]<-1
+fib[2]<-1
+for ( i in 3:n){
+    fib[i]<-fib[i-1]+fib[i-2]
+}
+```
+
+```{r}
+fib
+```
+
+<!--chapter:end:09-LOOP.Rmd-->
+
+---
+title: An R Markdown document converted from "Dataframe.ipynb"
+output: html_document
+---
+
+# Data Frames
+***
+
+* Dataframes adalah tipe list khusus dimana seitap elemen dari list harus memiliki panjang yang sama. Setiap elemen dari list dapat dipandang sebagai sebuah kolom dan panjang dari setiap elemen sebagai baris.
+* Berbeda dari matriks, dataframe bisa memuat berbagai kelas objek yang berbeda di setiap kolom. (Matriks mesti sama).
+* Dataframes juga bisa di konversi menjadi matriks.
+
+```{r}
+# Membuat dataframes
+da<-data.frame(mii=1:4, bar=c(T,T,T,F))
+da
+```
+
+```{r}
+db<-data.frame(nama=c("air", "minum", "dalam", "kemasan"), kode=c(9,9,4,0))
+db
+```
+
+
+```{r}
+# Bisa juga dibuat dengan membuat definisi dulu, baru dibuat dengan data.frame()
+ga<-10:6
+gi<--1:-5
+gu<-c("Indomarco","Prismatama","Jakarta","Indonesia","Didistribusikan")
+dc<-data.frame(ga,gi,gu)
+dc
+```
+
+```{r}
+#jumlah baris
+nrow(dc)
+#jumlah kolom
+ncol(dc)
+#dimensi
+dim(dc)
+```
+
+```{r}
+rownames(dc)
+```
+
+```{r}
+#mengassign nama row
+rownames(dc)<-c("sada","dua","telu","empat","lima")
+dc
+```
+
+```{r}
+#balikin ke semula
+rownames(dc)<-NULL
+dc
+```
+
+# 2. Memanggil Data Frame
+***
+
+```{r}
+head(dc)
+```
+
+```{r}
+str(dc)
+```
+
+```{r}
+# Perhatikan kolom gu langsung diubah jadi factor oleh R
+# Untuk menghindari hal tersebut bisa dilakukan dengan stringAsFactors=FALSE
+```
+
+```{r}
+dc<-data.frame(dc, stringAsFactors=FALSE)
+dc
+```
+
+```{r}
+#Menampilkan dua baris pertama dari atas dataframes
+head(dc, n=2)
+```
+
+```{r}
+#Menampilkan dua baris pertama dari bawah dataframes
+tail(dc, n=2)
+```
+
+```{r}
+class(dc)
+```
+
+```{r}
+#Mengakses kolom gu
+dc$gu
+```
+
+```{r}
+#Mengakses baris ke 5 kolom ke 3 
+dc[5,3]
+```
+
+```{r}
+#Mengakses baris ke 3 sd 5, pada kolom ke 3 
+dc[3:5,3]
+```
+
+```{r}
+#Mengakses baris ke 3, dari kolom 2 ke kolom 3
+dc[3,2:3]
+```
+
+```{r}
+# Mengakses baris ke 3 dan 4, dari kolom 2 ke kolom 3
+# Apa bedanya dengan kalau saya buat dc[c(3:4),2:3]
+z<-dc[3:4,2:3]
+z
+class(z)
+```
+
+```{r}
+y<-dc[c(3:4),2:3]
+y
+class(y)
+```
+
+```{r}
+#Mengakses semua di baris ke 2
+dc[2,]
+```
+
+```{r}
+#Mengakses semua di kolom ke 3
+dc[,3]
+```
+
+```{r}
+k<-dc[["gu"]]
+k
+class(k)
+```
+
+```{r}
+nama<-c("Rudin", "Paul", "Bartle", "Kolmogorov", "Smirnov", "Markov", "Laplace", "Cauchy", "Erdos", "Dedekind")
+umur<-c(34,45,67,23,34,56,87,55,35,39)
+berat<-c(63.5,77.6,67.1,89.2,56.3,97.5,68.9,88.3,68.5,86.6)
+profil<-data.frame(nama,umur,berat)
+profil
+```
+
+```{r}
+#Mengakses satu kolom tertentu pada data frame, menghasilkan tipe data list
+profil$umur
+```
+
+```{r}
+#Mengakses dua kolom tertentu pada data frame, menghasilkan data frame lagi
+profil[c("nama","berat")]
+```
+
+```{r}
+#cari yang beratnya >70
+ygberat<-profil[berat>70,]
+ygberat
+```
+
+```{r}
+#cari yang beratnya standar yakni <70
+ygstandar<-profil[berat<70,c("nama","berat")]
+ygstandar
+```
+
+```{r}
+#cari yang tua yakni umur <=45 tahun menggunakan subset
+yangtua<-subset(profil, umur>45 | umur==45, select=c("nama","umur"))
+yangtua
+```
+
+```{r}
+#cari yang muda yakni umur <45 tapi beratnya juga mesti lebih kecil dari 75 menggunakan subset
+yangmuda<-subset(profil, umur<45 & berat<75, select=c("nama","umur","berat"))
+yangmuda
+```
+
+```{r}
+nilaismt1<-c(98,87,78,89,80,84,76,65,59,81)
+nilaismt2<-c(56,67,77,65,68,60,69,78,45,59)
+nilaismt3<-c(100,89,78,89,88,95,94,74,84,96)
+profillkp<-data.frame(nama,umur,nilaismt1,nilaismt2,nilaismt3)
+profillkp
+```
+
+```{r}
+library(reshape)
+```
+
+```{r}
+ndtf<-stack(profillkp,select=c("nilaismt1", "nilaismt2","nilaismt3"))
+ndtf
+```
+
+```{r}
+nilaismt3<-c("Sarjana","Magister","Doktor", "Doktor", "Magister", "Doktor","Magister","Sarjana","Doktor","Magister")
+
+```
+
+```{r}
+#konversi ke matriks
+matriksbaru<-as.matrix(profil)
+matriksbaru
+str(matriksbaru)
+```
+
+```{r}
+#Bernavigasi di dalam folder di dalam root
+#myData <- read.csv('./Dataset/MRI.csv')
+#head(myData)
+```
+
+```{r}
+#getwd()
+```
+
+
+<!--chapter:end:10-Dataframe.Rmd-->
+
+---
+title: "Wrangling"
+author: "Andreas Syaloom Kurniawan"
+date: "4/24/2021"
+output: html_document
+---
+
+# WRANGLING
+Notes:
+sbse - akronim dari saya belum sempat eksplorasi
+## Pemahaman Paket ggplot
+
+Ggplot terdiri dari tiga bagian utama :
+* data di sini data biasanya diambil dari format data frame, bisa berbentuk data frame biasa, tibble ataupun tribble. Namun, di dalam dokumentasi dikatakan bahwa ggplot juga bisa menerima data dalam format lain (*sbse).
+* aes merupakan kepanjangan dari aestethic mapping, biasanya disini diterakan sumbu x, sumbu y, dan beberapa elemen lain (dibahas di bagian selanjutnya).
+* geom_xxx merupakan bagian terakhir dari ggplot, di sini tidak harus geom_point, ada banyak bentuk yang bisa digunakan.
+
+```{test}
+geom_point(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
+```
+
+untuk bagian aesnya r, ggplot memahami:
+
+```
+x
+
+y
+
+alpha
+
+colour
+
+fill
+
+group
+
+shape
+
+size
+
+stroke
+
+```
+
+## colour
+
+Ingat nulisnya "colour" versi british bukan versi american english color.
+Colour yang tersedia adalah sebagai berikut:
+
+## fill
+
+## group
+
+## shape
+
+## size
+
+## stroke
+
+<!--chapter:end:11-Wrangling.Rmd-->
+
+---
+title: An R Markdown document converted from "Grouping.ipynb"
+output: html_document
+---
+
+# Grouping
+```{r}
+for (apaini in 9:23)
+    {
+    print(apaini)
+}
+```
+
+```{r}
+print (1:10)
+```
+
+```{r}
+makanan<-c("jagung", "bewan", "ketela pohon", "bengkoang", "pisang", " ")
+makanan_panjangnya<-rep(NA, length(makanan))
+makanan_panjangnya
+```
+
+```{r}
+names(makanan_panjangnya)<-makanan
+makanan_panjangnya
+```
+
+```{r}
+for (a in makanan){
+   makanan_panjangnya[a]<-nchar(a)
+}
+makanan_panjangnya
+```
+
+```{r}
+ikan<-c("patin", "nila", 'lele', "mujair", "sotong")
+for (i in 1:5)
+    {
+    print(paste("Ikan", i, "namanya", ikan[i]))
+}  
+```
+
+```{r}
+ikan<-c(nama=c("patin", "nila", 'lele', "mujair", "sotong"),
+        habitat=c("laut", "tawar","tawar","tawar","laut" ))
+for (i in 1:5)
+    {
+    print(paste("Ikan", i, "namanya", ikan[c(1,i)], "hidupnya di", ikan[c(2,i)]))
+}  
+```
+
+```{r}
+ikan[c(2,1)]
+```
+
+```{r}
+as.numeric(TRUE)
+as.numeric(FALSE)
+```
+
+```{r}
+print(1>1)
+print(1>0)
+print(1>2)
+```
+
+```{r}
+print(1>=1)
+print(5!=1)
+```
+
+```{r}
+toCheck<-1
+if(toCheck==1){
+    print("Hello")
+}
+```
+
+```{r}
+check.bool<-function(x)
+    {
+    if(x==1)
+        {
+        print("Hello")
+    }else if (x==0){
+        print("goodbye")
+    }else
+        print("confused")
+}
+```
+
+```{r}
+check.bool(TRUE)
+```
+
+```{r}
+check.bool(0)
+```
+
+```{r}
+check.bool("Mongket")
+```
+
+```{r}
+gunakan_switch<-function(x)
+    {
+    switch(x,
+        "1"="Yutub",
+        "2"="Twitter",
+        "3"="Facebook",
+        "4"="Instagram",
+        "5"="VK",
+    )}
+gunakan_switch("3")
+```
+
+```{r}
+gunakan_switch("5")
+```
+
+The R software provides access to the uniform distribution by the __dunif()__, __punif()__, __qunif()__ and __runif()__ functions. Apply the __help()__ function on these functions for further information.
+
+```{r}
+# generate n random numbers between the default values of 0 and 1
+sdf<-runif (25, min = 0, max = 100)
+sdf
+```
+
+```{r}
+hist(sdf, freq = FALSE, xlab = 'x', density = 10)
+```
+
+```{r}
+random_dgn_kembalian <- sample(1:10, 7, replace=T)
+random_dgn_kembalian
+random_tnp_kembalian <- sample(1:10, 5, replace=F)
+random_tnp_kembalian
+```
+
+```{r}
+sample(state.name, 10)
+```
+
+```{r}
+# paste together string a   &   b  paste (a, b)
+x<-c("ubi")
+y<-c("kayu")
+paste(x,y)
+```
+
+```{r}
+x<-c("ubi","rambat")
+y<-c("kayu")
+paste(x,y)
+```
+
+```{r}
+x<-c("rambat")
+y<-c("pohon","kayu")
+paste(x,y)
+```
+
+```{r}
+x<-c("rambat", 1, 2, TRUE)
+y<-c("pohon","kayu", 2, 4)
+paste(x,y)
+```
+
+```{r}
+# paste multiple strings with a separating character
+paste ("Kenapa", "Kamu", "Terlihat", "Lelah", "Hayati", sep = "?")
+```
+
+```{r}
+# paste multiple strings with a separating character
+paste ("Kenapa", 1:5, sep = " v1.")
+```
+
+```{r}
+musuh<-c(hewan=c("semut","belalang","lipas"),elemen=c("udara","api"))
+```
+
+```{r}
+length(musuh)
+```
+
+```{r}
+nchar(musuh)
+```
+
+```{r}
+streets <- c ("Framboise", "Yannick", "Guillaume", "Peter", "James", "Andreas Syaloom Kurniawan")
+# default abbreviations abbreviate (streets
+abbreviate(streets)
+```
+
+```{r}
+sort(streets)
+```
+
+```{r}
+sort(streets, decreasing = TRUE)
+```
+
+```{r}
+isi <- c("Serum", "Vaksin", "Antibiotik", "Tablet")
+is.element ("Serum", isi)
+is.element ("Ser", isi)
+```
+
+```{r}
+"Vaksin" %in% isi
+"Vak" %in% isi
+```
+
+```{r}
+isi_2 <- c ("Kucing", "Anjing", "Burung")
+isi_3 <- c ("Belut", "Ular", "Buaya")
+isi_4 <- c ("Kucing", "Anjing", "Burung")
+isi_5 <- c ("Burung","Kucing", "Anjing")
+isi_6 <- c ("Kucing", "Anjing", "Burung","YuyuKangkang")
+```
+
+```{r}
+identical(isi_2,isi_4)
+identical(isi_2,isi_5)
+identical(isi_2,isi_3)
+```
+
+```{r}
+setequal(isi_2,isi_4)
+setequal(isi_2,isi_5)
+setequal(isi_2,isi_3)
+```
+
+```{r}
+print(setdiff(isi_6,isi_2))
+print(setdiff(isi_2,isi_6))
+```
+
+```{r}
+intersect(isi_2,isi_6)
+intersect(isi_6,isi_2)
+```
+
+```{r}
+union(isi_6,isi_3)
+```
+
+```{r}
+# remove whitespaces on the left side
+library (stringr)
+text <- c ("Text ", "  with", " whitespace ", " on", "both ", " sides ")
+str_trim(text, side = "left")
+str_trim(text, side = "right")
+str_trim(text, side = "both")
+```
+
+```{r}
+banyak_deh<-c('Anjing','Kucing','Anjing','Burung','YuyuKangkang','Belut','Burung','Burung','Ular','Buaya','Anjing','Burung','YuyuKangkang','Belut','Ular')
+table(banyak_deh)
+```
+
+```{r}
+akumulasi<-table(banyak_deh)
+akumulasi["Burung"]
+```
+
+```{r}
+akumulasi["YuyuKangkang"]
+```
+
+```{r}
+tabelin_yuk<-as.data.frame(akumulasi)
+tabelin_yuk
+```
+
+```{r}
+tmbh_sum<-addmargins(akumulasi,1)
+tmbh_sum
+```
+
+```{r}
+summary(tabelin_yuk)
+```
+
+```{r}
+#setwd("D://OneDrive - Universitas Terbuka//00 LABORATORIUM//Modul R//Dataset//Zuur_RBook")
+```
+
+```{r}
+#veg<-read.table(file="Vegetation2.txt", header=TRUE)
+#head(veg, n=5)
+```
+
+```{r}
+#names(veg)
+```
+
+```{r}
+#str(veg)
+```
+
+```{r}
+#m<-mean(veg$R)
+#m
+```
+
+```{r}
+#tapply(veg$R, veg$Transect, mean)
+```
+
+```{r}
+#sapply
+#lapply
+```
+
+<!--chapter:end:12-Grouping.Rmd-->
+
+---
+title: An R Markdown document converted from "Tidyverse.ipynb"
+output: html_document
+---
+
+# Tidyverse
+
+```{r}
+#install.packages("tidyverse")
+#library(tidyverse)
+```
+
+```{r}
+#myTib<-tibble(x=1:4,
+#             y=c("London","Paris","Madrid","Lisbon"))
+#myTib
+```
+
+```{r}
+#class(myTib)
+```
+
+```{r}
+#ty<-data.frame(x=1:5, y=c("Airbus", "Boeing", "Tupolev", "Ilyushin", "Bombardier"))
+#ty
+#class(ty)
+```
+
+```{r}
+#tyToTib<-as_tibble(ty)
+#tyToTib
+#class(tyToTib)
+```
+
+<!--chapter:end:13-Tidyverse.Rmd-->
+
+---
+title: "Ggplot"
+author: "Andreas Syaloom Kurniawan"
+date: "4/24/2021"
+output: html_document
+---
+
+Notes:
+sbse - akronim dari saya belum sempat eksplorasi
+# Pemahaman Paket ggplot
+
+Ggplot terdiri dari tiga bagian utama :
+* data di sini data biasanya diambil dari format data frame, bisa berbentuk data frame biasa, tibble ataupun tribble. Namun, di dalam dokumentasi dikatakan bahwa ggplot juga bisa menerima data dalam format lain (*sbse).
+* aes merupakan kepanjangan dari aestethic mapping, biasanya disini diterakan sumbu x, sumbu y, dan beberapa elemen lain (dibahas di bagian selanjutnya).
+* geom_xxx merupakan bagian terakhir dari ggplot, di sini tidak harus geom_point, ada banyak bentuk yang bisa digunakan.
+
+```{xamenamed}
+geom_point(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
+```
+
+untuk bagian aesnya r, ggplot memahami:
+
+```
+x
+
+y
+
+alpha
+
+colour
+
+fill
+
+group
+
+shape
+
+size
+
+stroke
+
+```
+
+## colour
+
+Ingat nulisnya "colour" versi british bukan versi american english color.
+Colour yang tersedia adalah sebagai berikut:
+
+## fill
+
+## group
+
+## shape
+
+## size
+
+## stroke
+
+
+```{rm}
+head(diamonds)
+```
+
+```{rn}
+diamonds_c1<-ggplot(data = diamonds,
+                    mapping = aes(x = carat, y = price, colour = clarity)) +
+                    geom_point()
+diamonds_c1
+```
+
+```{ro}
+diamonds_c2 <-
+  ggplot(data = diamonds) +
+  geom_point(mapping = aes(x = carat, y = price, colour = clarity))
+```
+
+```{rp}
+diamonds_c2
+```
+
+```{rql}
+diamonds_c3 <-ggplot()+
+    geom_point(
+        data=diamonds,
+        mapping=aes(x = carat, y = price, colour = clarity)
+    )
+diamonds_c3
+```
+
+```{ty}
+summary(diamonds_c1)
+summary(diamonds_c2)
+summary(diamonds_c3)
+```
+
+Tiga komponen dasar dalam pembuatan grafik yaitu:
+* __Data__, yaitu data berisi informasi yang akan dibuat grafik
+* __Mapping__, yaitu penentuan variabel/kolom yang akan ditampilkan dalam grafik
+* __Geometries__, yaitu representasi visual dari variabel/kolom dalam grafik
+
+qplot(<MAPPING>, data = <DATA>, geom = <GEOM>)
+
+```{rr}
+#ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +
+#  <GEOM_FUNCTION>()
+```
+
+```{rt}
+#ggplot(data = <DATA>) +
+#  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+```
+
+```{ry}
+#ggplot() +
+#  <GEOM_FUNCTION>(data = <DATA>, mapping = aes(<MAPPINGS>)
+```
+
+```{rda}
+Delapan Komponen Dalam Grafik
+Selain tiga komponen dasar yang sebelumnya telah disinggung, dalam konsep Grammar of Graphic terdapat lima komponen utama lainnya yang berperan penting dalam pembuatan sebuah grafik. Berikut merupakan delapan komponen dalam grafik:
+
+Data
+Mapping
+Statistic
+Scales
+Geometries
+Facets
+Coordinates
+Theme
+```
+
+df<-data.frame(
+    x=c(3,1,5),
+    y=c(2,4,6),
+    label=c("a","b","c")
+)
+p<-ggplot(df,aes(x,y,label=label))+
+    labs(x=NULL, y=NULL)+
+    theme(plot.title=element_text(size=12))
+p+geom_point()+ggtitle("point")
+```
+
+<!--chapter:end:14-ggplot.Rmd-->
+
+---
+title: An R Markdown document converted from "TanggalWaktu.ipynb"
+output: html_document
+---
+
+# Tanggal dan Waktu di R
+***
+
+| Code | Value |
+| --- | --- | 
+| %d | Day of the month (number) |
+| %m | Month (decimal number)| 
+| %b | Month (abbreviated)|
+| %B | Month (full name) |
+| %y | Year (2 digit)| 
+| %Y | Year (4 digit) |
+
+* Date objects are stored as the number of days since January 1, 1970, using negative numbers for earlier dates. 
+* The __as.numeric__ function can be used to convert a __Date__ object to its internal form
+
+```{r}
+#as.Date("2020/04/15")
+```
+
+```{r}
+as.Date("2020-04-15")
+```
+
+```{r}
+#as.Date("2020/15/04")
+```
+
+```{r}
+as.Date("2020/15/04", format='%Y/%d/%m')
+```
+
+```{r}
+as.Date("2020 August, 04", format='%Y %B, %d')
+```
+
+```{r}
+tanggal<-as.Date("May 30, 93", format='%B %d, %y')
+tanggal
+```
+
+```{r}
+konversi<-as.numeric(tanggal)
+konversi
+```
+
+```{r}
+tanggal1<-as.Date("30/05/1993", format='%d/%m/%Y')
+tanggal2<-as.Date("18/03/2021", format='%d/%m/%Y')
+tanggal1
+tanggal2
+```
+
+```{r}
+tanggal2-tanggal1
+```
+
+```{r}
+difftime(tanggal2, tanggal1, units="weeks")
+```
+
+```{r}
+difftime(tanggal2, tanggal1, units="hours")
+```
+
+```{r}
+h<-tanggal2-tanggal1
+```
+
+```{r}
+u<-h/365
+attr(u, "units")="years"
+u
+```
+
+```{r}
+#https://www.youtube.com/watch?v=IbvBbyg-Nz4
+```
+
+
+<!--chapter:end:15-TanggalWaktu.Rmd-->
+
+---
+title: NULL dan NA
+output: html_document
+---
+
+# NULL dan NA
+***
+* NULL represents the null or an empty object in R. 
+* NA represents a missing value in R. NA can be updated in R by vectors, list and other R objects 
+* whereas NULL cannot be coerced.
+
+```{r}
+typeof(NULL)
+```
+
+```{r}
+length(NULL)
+```
+
+```{r}
+is.null(1)
+```
+
+```{r}
+#c()
+```
+
+```{r}
+nu<-c(45,33,42,NA,12,12,22,11)
+nu
+```
+
+```{r}
+mean(nu)
+```
+
+```{r}
+#Rata-rata bila na dihilangkan
+mean(nu, na.rm=T)
+```
+
+```{r}
+ne<-c(45,33,42,NULL,12,12,22,11)
+ne
+mean(ne)
+```
+
+```{r}
+u<-NULL
+v<-NA
+u
+v
+```
+
+```{r}
+length(u)
+length(v)
+```
+
+
+<!--chapter:end:16-Null_Na.Rmd-->
+

@@ -1,0 +1,224 @@
+---
+title: An R Markdown document converted from "Dataframe.ipynb"
+output: html_document
+---
+
+# Data Frames
+***
+
+* Dataframes adalah tipe list khusus dimana seitap elemen dari list harus memiliki panjang yang sama. Setiap elemen dari list dapat dipandang sebagai sebuah kolom dan panjang dari setiap elemen sebagai baris.
+* Berbeda dari matriks, dataframe bisa memuat berbagai kelas objek yang berbeda di setiap kolom. (Matriks mesti sama).
+* Dataframes juga bisa di konversi menjadi matriks.
+
+```{r}
+# Membuat dataframes
+da<-data.frame(mii=1:4, bar=c(T,T,T,F))
+da
+```
+
+```{r}
+db<-data.frame(nama=c("air", "minum", "dalam", "kemasan"), kode=c(9,9,4,0))
+db
+```
+
+
+```{r}
+# Bisa juga dibuat dengan membuat definisi dulu, baru dibuat dengan data.frame()
+ga<-10:6
+gi<--1:-5
+gu<-c("Indomarco","Prismatama","Jakarta","Indonesia","Didistribusikan")
+dc<-data.frame(ga,gi,gu)
+dc
+```
+
+```{r}
+#jumlah baris
+nrow(dc)
+#jumlah kolom
+ncol(dc)
+#dimensi
+dim(dc)
+```
+
+```{r}
+rownames(dc)
+```
+
+```{r}
+#mengassign nama row
+rownames(dc)<-c("sada","dua","telu","empat","lima")
+dc
+```
+
+```{r}
+#balikin ke semula
+rownames(dc)<-NULL
+dc
+```
+
+# 2. Memanggil Data Frame
+***
+
+```{r}
+head(dc)
+```
+
+```{r}
+str(dc)
+```
+
+```{r}
+# Perhatikan kolom gu langsung diubah jadi factor oleh R
+# Untuk menghindari hal tersebut bisa dilakukan dengan stringAsFactors=FALSE
+```
+
+```{r}
+dc<-data.frame(dc, stringAsFactors=FALSE)
+dc
+```
+
+```{r}
+#Menampilkan dua baris pertama dari atas dataframes
+head(dc, n=2)
+```
+
+```{r}
+#Menampilkan dua baris pertama dari bawah dataframes
+tail(dc, n=2)
+```
+
+```{r}
+class(dc)
+```
+
+```{r}
+#Mengakses kolom gu
+dc$gu
+```
+
+```{r}
+#Mengakses baris ke 5 kolom ke 3 
+dc[5,3]
+```
+
+```{r}
+#Mengakses baris ke 3 sd 5, pada kolom ke 3 
+dc[3:5,3]
+```
+
+```{r}
+#Mengakses baris ke 3, dari kolom 2 ke kolom 3
+dc[3,2:3]
+```
+
+```{r}
+# Mengakses baris ke 3 dan 4, dari kolom 2 ke kolom 3
+# Apa bedanya dengan kalau saya buat dc[c(3:4),2:3]
+z<-dc[3:4,2:3]
+z
+class(z)
+```
+
+```{r}
+y<-dc[c(3:4),2:3]
+y
+class(y)
+```
+
+```{r}
+#Mengakses semua di baris ke 2
+dc[2,]
+```
+
+```{r}
+#Mengakses semua di kolom ke 3
+dc[,3]
+```
+
+```{r}
+k<-dc[["gu"]]
+k
+class(k)
+```
+
+```{r}
+nama<-c("Rudin", "Paul", "Bartle", "Kolmogorov", "Smirnov", "Markov", "Laplace", "Cauchy", "Erdos", "Dedekind")
+umur<-c(34,45,67,23,34,56,87,55,35,39)
+berat<-c(63.5,77.6,67.1,89.2,56.3,97.5,68.9,88.3,68.5,86.6)
+profil<-data.frame(nama,umur,berat)
+profil
+```
+
+```{r}
+#Mengakses satu kolom tertentu pada data frame, menghasilkan tipe data list
+profil$umur
+```
+
+```{r}
+#Mengakses dua kolom tertentu pada data frame, menghasilkan data frame lagi
+profil[c("nama","berat")]
+```
+
+```{r}
+#cari yang beratnya >70
+ygberat<-profil[berat>70,]
+ygberat
+```
+
+```{r}
+#cari yang beratnya standar yakni <70
+ygstandar<-profil[berat<70,c("nama","berat")]
+ygstandar
+```
+
+```{r}
+#cari yang tua yakni umur <=45 tahun menggunakan subset
+yangtua<-subset(profil, umur>45 | umur==45, select=c("nama","umur"))
+yangtua
+```
+
+```{r}
+#cari yang muda yakni umur <45 tapi beratnya juga mesti lebih kecil dari 75 menggunakan subset
+yangmuda<-subset(profil, umur<45 & berat<75, select=c("nama","umur","berat"))
+yangmuda
+```
+
+```{r}
+nilaismt1<-c(98,87,78,89,80,84,76,65,59,81)
+nilaismt2<-c(56,67,77,65,68,60,69,78,45,59)
+nilaismt3<-c(100,89,78,89,88,95,94,74,84,96)
+profillkp<-data.frame(nama,umur,nilaismt1,nilaismt2,nilaismt3)
+profillkp
+```
+
+```{r}
+library(reshape)
+```
+
+```{r}
+ndtf<-stack(profillkp,select=c("nilaismt1", "nilaismt2","nilaismt3"))
+ndtf
+```
+
+```{r}
+nilaismt3<-c("Sarjana","Magister","Doktor", "Doktor", "Magister", "Doktor","Magister","Sarjana","Doktor","Magister")
+
+```
+
+```{r}
+#konversi ke matriks
+matriksbaru<-as.matrix(profil)
+matriksbaru
+str(matriksbaru)
+```
+
+```{r}
+#Bernavigasi di dalam folder di dalam root
+#myData <- read.csv('./Dataset/MRI.csv')
+#head(myData)
+```
+
+```{r}
+#getwd()
+```
+

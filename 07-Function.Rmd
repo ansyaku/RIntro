@@ -1,0 +1,108 @@
+---
+title: An R Markdown document converted from "Function.ipynb"
+output: html_document
+---
+
+# Fungsi Sprintf
+***
+
+```{r}
+sprintf("Hachi suka makan %s, karena dia benci %s","Kucing", "Monyet")
+```
+
+```{r}
+sprintf("%s suka makan %s, karena dia benci %s","Kakaktua", "Tahu", "Tempe")
+```
+
+```{r}
+toktok<-function(apaini, apaitu)
+    {
+    print(sprintf("%s suka makan %s", apaini, apaitu))
+}
+```
+
+```{r}
+toktok("Kucing", "Telor Puyuh Rebus Warmindo")
+```
+
+```{r}
+toktok("Bapak", "makanan terlarang seperti sayap kelelawar")
+```
+
+```{r}
+# Nilai default
+tiktik<-function(apaini, apaitu="goreng pisang")
+    {
+    print(sprintf("%s suka makan %s", apaini, apaitu))
+}
+```
+
+```{r}
+tiktik("Geronimo")
+```
+
+```{r}
+#Fungsi dengan return ataupun tidak dengan return.
+#Fungsi dengan return biasanya fungsi yang menghasilkan list.
+```
+
+```{r}
+kembalikan.ini<-function(angka1, angka2){
+    angka1^2-angka2^2+1
+}
+```
+
+```{r}
+kembalikan.ini(4,3)
+```
+
+```{r}
+kembalikan.itu<-function(angka1, angka2){
+    return (angka1^2-angka2^2+1)
+}
+```
+
+```{r}
+kembalikan.itu(4,3)
+```
+
+```{r}
+# Fungsi do.call
+```
+
+```{r}
+lakukan.ini<-function(x,func=mean){
+    do.call(func,args=list(x))
+}
+```
+
+```{r}
+lakukan.ini(1:1000)
+```
+
+```{r}
+angka<-c(3,5,6,8,99,9,3,4,5)
+lakukan.ini(angka)
+```
+
+```{r}
+lakukan.ini(angka, sum)
+```
+
+```{r}
+# nulis function juga gak mesti kurawal, bisa ke samping aja
+rumus_mean<-function(x) sum(x)/length(x)
+nilai_math<-c(5,6,7,8,90,3,2,4)
+rumus_mean(nilai_math)
+```
+
+```{r}
+rumus_luas_lingkaran<-function(r) (22/7)*r*r
+jejari<-c(14)
+rumus_luas_lingkaran(jejari)
+```
+
+```{r}
+#atau bisa menggunakan fungsi built in yang udah ada
+mean(nilai_math)
+```

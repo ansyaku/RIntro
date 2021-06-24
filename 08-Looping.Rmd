@@ -1,0 +1,8 @@
+---
+title: An R Markdown document converted from "Looping.ipynb"
+output: html_document
+---
+
+# Looping
+
+Loping adalah

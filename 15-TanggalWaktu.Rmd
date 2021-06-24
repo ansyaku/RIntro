@@ -1,0 +1,83 @@
+---
+title: An R Markdown document converted from "TanggalWaktu.ipynb"
+output: html_document
+---
+
+# Tanggal dan Waktu di R
+***
+
+| Code | Value |
+| --- | --- | 
+| %d | Day of the month (number) |
+| %m | Month (decimal number)| 
+| %b | Month (abbreviated)|
+| %B | Month (full name) |
+| %y | Year (2 digit)| 
+| %Y | Year (4 digit) |
+
+* Date objects are stored as the number of days since January 1, 1970, using negative numbers for earlier dates. 
+* The __as.numeric__ function can be used to convert a __Date__ object to its internal form
+
+```{r}
+#as.Date("2020/04/15")
+```
+
+```{r}
+as.Date("2020-04-15")
+```
+
+```{r}
+#as.Date("2020/15/04")
+```
+
+```{r}
+as.Date("2020/15/04", format='%Y/%d/%m')
+```
+
+```{r}
+as.Date("2020 August, 04", format='%Y %B, %d')
+```
+
+```{r}
+tanggal<-as.Date("May 30, 93", format='%B %d, %y')
+tanggal
+```
+
+```{r}
+konversi<-as.numeric(tanggal)
+konversi
+```
+
+```{r}
+tanggal1<-as.Date("30/05/1993", format='%d/%m/%Y')
+tanggal2<-as.Date("18/03/2021", format='%d/%m/%Y')
+tanggal1
+tanggal2
+```
+
+```{r}
+tanggal2-tanggal1
+```
+
+```{r}
+difftime(tanggal2, tanggal1, units="weeks")
+```
+
+```{r}
+difftime(tanggal2, tanggal1, units="hours")
+```
+
+```{r}
+h<-tanggal2-tanggal1
+```
+
+```{r}
+u<-h/365
+attr(u, "units")="years"
+u
+```
+
+```{r}
+#https://www.youtube.com/watch?v=IbvBbyg-Nz4
+```
+

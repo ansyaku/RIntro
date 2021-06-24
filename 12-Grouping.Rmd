@@ -1,0 +1,317 @@
+---
+title: An R Markdown document converted from "Grouping.ipynb"
+output: html_document
+---
+
+# Grouping
+```{r}
+for (apaini in 9:23)
+    {
+    print(apaini)
+}
+```
+
+```{r}
+print (1:10)
+```
+
+```{r}
+makanan<-c("jagung", "bewan", "ketela pohon", "bengkoang", "pisang", " ")
+makanan_panjangnya<-rep(NA, length(makanan))
+makanan_panjangnya
+```
+
+```{r}
+names(makanan_panjangnya)<-makanan
+makanan_panjangnya
+```
+
+```{r}
+for (a in makanan){
+   makanan_panjangnya[a]<-nchar(a)
+}
+makanan_panjangnya
+```
+
+```{r}
+ikan<-c("patin", "nila", 'lele', "mujair", "sotong")
+for (i in 1:5)
+    {
+    print(paste("Ikan", i, "namanya", ikan[i]))
+}  
+```
+
+```{r}
+ikan<-c(nama=c("patin", "nila", 'lele', "mujair", "sotong"),
+        habitat=c("laut", "tawar","tawar","tawar","laut" ))
+for (i in 1:5)
+    {
+    print(paste("Ikan", i, "namanya", ikan[c(1,i)], "hidupnya di", ikan[c(2,i)]))
+}  
+```
+
+```{r}
+ikan[c(2,1)]
+```
+
+```{r}
+as.numeric(TRUE)
+as.numeric(FALSE)
+```
+
+```{r}
+print(1>1)
+print(1>0)
+print(1>2)
+```
+
+```{r}
+print(1>=1)
+print(5!=1)
+```
+
+```{r}
+toCheck<-1
+if(toCheck==1){
+    print("Hello")
+}
+```
+
+```{r}
+check.bool<-function(x)
+    {
+    if(x==1)
+        {
+        print("Hello")
+    }else if (x==0){
+        print("goodbye")
+    }else
+        print("confused")
+}
+```
+
+```{r}
+check.bool(TRUE)
+```
+
+```{r}
+check.bool(0)
+```
+
+```{r}
+check.bool("Mongket")
+```
+
+```{r}
+gunakan_switch<-function(x)
+    {
+    switch(x,
+        "1"="Yutub",
+        "2"="Twitter",
+        "3"="Facebook",
+        "4"="Instagram",
+        "5"="VK",
+    )}
+gunakan_switch("3")
+```
+
+```{r}
+gunakan_switch("5")
+```
+
+The R software provides access to the uniform distribution by the __dunif()__, __punif()__, __qunif()__ and __runif()__ functions. Apply the __help()__ function on these functions for further information.
+
+```{r}
+# generate n random numbers between the default values of 0 and 1
+sdf<-runif (25, min = 0, max = 100)
+sdf
+```
+
+```{r}
+hist(sdf, freq = FALSE, xlab = 'x', density = 10)
+```
+
+```{r}
+random_dgn_kembalian <- sample(1:10, 7, replace=T)
+random_dgn_kembalian
+random_tnp_kembalian <- sample(1:10, 5, replace=F)
+random_tnp_kembalian
+```
+
+```{r}
+sample(state.name, 10)
+```
+
+```{r}
+# paste together string a   &   b  paste (a, b)
+x<-c("ubi")
+y<-c("kayu")
+paste(x,y)
+```
+
+```{r}
+x<-c("ubi","rambat")
+y<-c("kayu")
+paste(x,y)
+```
+
+```{r}
+x<-c("rambat")
+y<-c("pohon","kayu")
+paste(x,y)
+```
+
+```{r}
+x<-c("rambat", 1, 2, TRUE)
+y<-c("pohon","kayu", 2, 4)
+paste(x,y)
+```
+
+```{r}
+# paste multiple strings with a separating character
+paste ("Kenapa", "Kamu", "Terlihat", "Lelah", "Hayati", sep = "?")
+```
+
+```{r}
+# paste multiple strings with a separating character
+paste ("Kenapa", 1:5, sep = " v1.")
+```
+
+```{r}
+musuh<-c(hewan=c("semut","belalang","lipas"),elemen=c("udara","api"))
+```
+
+```{r}
+length(musuh)
+```
+
+```{r}
+nchar(musuh)
+```
+
+```{r}
+streets <- c ("Framboise", "Yannick", "Guillaume", "Peter", "James", "Andreas Syaloom Kurniawan")
+# default abbreviations abbreviate (streets
+abbreviate(streets)
+```
+
+```{r}
+sort(streets)
+```
+
+```{r}
+sort(streets, decreasing = TRUE)
+```
+
+```{r}
+isi <- c("Serum", "Vaksin", "Antibiotik", "Tablet")
+is.element ("Serum", isi)
+is.element ("Ser", isi)
+```
+
+```{r}
+"Vaksin" %in% isi
+"Vak" %in% isi
+```
+
+```{r}
+isi_2 <- c ("Kucing", "Anjing", "Burung")
+isi_3 <- c ("Belut", "Ular", "Buaya")
+isi_4 <- c ("Kucing", "Anjing", "Burung")
+isi_5 <- c ("Burung","Kucing", "Anjing")
+isi_6 <- c ("Kucing", "Anjing", "Burung","YuyuKangkang")
+```
+
+```{r}
+identical(isi_2,isi_4)
+identical(isi_2,isi_5)
+identical(isi_2,isi_3)
+```
+
+```{r}
+setequal(isi_2,isi_4)
+setequal(isi_2,isi_5)
+setequal(isi_2,isi_3)
+```
+
+```{r}
+print(setdiff(isi_6,isi_2))
+print(setdiff(isi_2,isi_6))
+```
+
+```{r}
+intersect(isi_2,isi_6)
+intersect(isi_6,isi_2)
+```
+
+```{r}
+union(isi_6,isi_3)
+```
+
+```{r}
+# remove whitespaces on the left side
+library (stringr)
+text <- c ("Text ", "  with", " whitespace ", " on", "both ", " sides ")
+str_trim(text, side = "left")
+str_trim(text, side = "right")
+str_trim(text, side = "both")
+```
+
+```{r}
+banyak_deh<-c('Anjing','Kucing','Anjing','Burung','YuyuKangkang','Belut','Burung','Burung','Ular','Buaya','Anjing','Burung','YuyuKangkang','Belut','Ular')
+table(banyak_deh)
+```
+
+```{r}
+akumulasi<-table(banyak_deh)
+akumulasi["Burung"]
+```
+
+```{r}
+akumulasi["YuyuKangkang"]
+```
+
+```{r}
+tabelin_yuk<-as.data.frame(akumulasi)
+tabelin_yuk
+```
+
+```{r}
+tmbh_sum<-addmargins(akumulasi,1)
+tmbh_sum
+```
+
+```{r}
+summary(tabelin_yuk)
+```
+
+```{r}
+#setwd("D://OneDrive - Universitas Terbuka//00 LABORATORIUM//Modul R//Dataset//Zuur_RBook")
+```
+
+```{r}
+#veg<-read.table(file="Vegetation2.txt", header=TRUE)
+#head(veg, n=5)
+```
+
+```{r}
+#names(veg)
+```
+
+```{r}
+#str(veg)
+```
+
+```{r}
+#m<-mean(veg$R)
+#m
+```
+
+```{r}
+#tapply(veg$R, veg$Transect, mean)
+```
+
+```{r}
+#sapply
+#lapply
+```

@@ -1,0 +1,261 @@
+---
+title: Vector
+author: "Andreas Syaloom Kurniawan"
+date: "4/24/2021"
+output: html_document
+---
+
+# Vektor
+***
+
+Vektor adalah struktur data (*data structure*) paling sederhana di R.
+<br>
+Vektor secara singkat dapat disebut sebagai kumpulan data-data (disebut sbg: elemen) dengan __tipe yang sama__. Artinya, kalau numerik maka didalam suatu vektor semuanya harus numerik, kalau karakter harus karakter semua. Nilai-nilai di dalam vektor disimpan secara berurutan sesuai dengan daftar yang kita buat. 
+<br>
+Terdapat beberapa jenis vektor:
+<br>
+1. __Vektor Numeric__ mengandung data-data bertipe bilangan riil.
+1. __Vektor Integer__, mengandung data-data bertipe bilangan bulat.
+1. __Vektor Logical__, mengandung data-data kebenaran (TRUE and/or FALSE)
+1. __Vektor Character__, mengandung data-data bertipe teks
+1. __Vektor Datetime__, mengandung data-data bertipe waktu dan tanggal.
+1. __Vektor Factors__, a special type of vector to work with categories.
+
+Dengan menggunakan metode __c()__, kita bisa mengkoleksi semua argumen-argumen untuk membentuk vektor. Seluruh argumen akan dideduksi menjadi satu tipe data bersama, atribut lain selain nama akan dihapus.
+<br>
+<br>
+<span style="color:blue">__WARNING!!!__</span>
+<br>
+Vektor disini jangan dikacaukan dengan vektor matematika. Vektor di R tidak ada row dan kolomnya.
+
+## Membuat Vector
+Membuat vector yang bertipe bilangan bulat. Di contoh ini, kita buat suatu vector bernama rv, menggunakan fungsi c(), dan melist anggotnya.
+```{r, intvect, include=TRUE, results = 'hold'}
+rv<-c(2, 1, 1, 2)
+rv
+length(rv)
+typeof(rv)
+```
+
+```{r, intvect2, include=TRUE, results='hold'}
+rx<-c(1,2,3,4,5,6)
+rx
+typeof(rx)
+```
+Membuat vektor berseri, dimulai dari 3 (elemen pertama) hingga maksimum 5 (elemen terakhir) dengan penambahan sebesar 1,75 setiap elememennya.
+```{r, serievect, include=TRUE, results = 'hold'}
+seq(3,5, by=1.75) ->rz
+rz
+typeof(rz) #sekaligus cek tipe vektor
+length(rz) #sekaligus cek panjang vektor
+```
+Membuat vektor yang mirip dengan __rz__ namun disini, dimulai dari 7, minimum 1, dengan faktor pengurang -1.
+```{r, serievect2, include=TRUE, results = 'hold'}
+seq(7,1, by=-1) ->ra
+ra
+typeof(ra)
+length(ra)
+```
+Vektor yang elemennya bertipe boolean
+```{r, booleant, include=TRUE, results = 'hold'}
+rb<-c(TRUE, FALSE, TRUE, FALSE, FALSE) 
+rb
+typeof(rb)
+length(rb)
+```
+Vektor yang elemennya bertipe character
+```{r, charr, include=TRUE, results = 'hold'}
+rc<-c("Ibu","Ayah","Adik","Kakak")
+rc
+typeof(rc)
+str(rc)
+length(rc)
+```
+Membuat vector dari dua buah vector:
+```{r, gen2vect, include=TRUE, results = 'hold'}
+va<- c(2, 3, 5) 
+vb<- c("aa", "bb", "cc", "dd", "ee") 
+vc<-c(va, vb) 
+vc
+```
+
+
+## Operasi aritmatika vector
+
+Unsur-unsur di dalam vector dapat dioperasikan satu sama lain sehingga menghasilkan vector juga. 
+
+```{r, vectmult, include=TRUE, results = 'hold'}
+#Vektor rw yang elemennya merupakan rw=2rx+1
+rw<-2*rx+1
+rw
+typeof(rw)
+length(rw)
+```
+
+```{r}
+ve<-rep(c(1, 1, 2), times = 3)
+ve
+typeof(ve)
+length(ve)
+```
+
+```{r}
+vf<-rep(c(1, 7, 2), each = 3)
+vf
+typeof(vf)
+length(vf)
+```
+
+```{r}
+vg<-rep(c(3, 9), times = c(1,4))
+vg
+typeof(vg)
+length(vg)
+```
+
+```{r}
+vh<-rep(5:7,length.out=13)
+vh
+typeof(vh)
+length(vh)
+```
+
+
+## Coercion
+***
+
+Peraturan coercion:
+
+1. Logical values are converted to numbers: TRUE is converted to 1 and FALSE to 0.
+1. Values are converted to the simplest type required to represent all information.
+1. The ordering is roughly logical < integer < numeric < complex < character < list.
+1. Objects of type raw are not converted to other types.
+1. Object attributes are dropped when an object ...
+
+Misalkan kita memiliki sebuah vektor berisi integer
+```{r, tint, include=TRUE, results = 'hold'}
+vl<-1:10
+vl
+typeof(vl)
+class(vl)
+```
+Kita ubah jadi tipe logic,
+```{r, tlogic, include=TRUE, results = 'hold'}
+as.logical(vl)
+vl
+```
+
+Kita ubah jadi bentuk double:
+```{r, tdouble, include=TRUE, results = 'hold'}
+as.double(vl)
+vl
+```
+
+Kita ubah jadi bentuk karakter:
+```{r, tchar,  include=TRUE, results = 'hold'}
+as.character(vl)
+vl
+typeof(vl)
+class(vl)
+```
+
+```{r}
+vm<-c("beng","ate","guntur", "angan", 'serser')
+vm
+```
+
+```{r}
+#Pemanggilan vektor dimulai dari elemen nomor 1 (tidak ada elemen 0)
+vm[1]
+```
+
+```{r}
+#Panggil selain
+vm[-1]
+```
+
+```{r}
+vm[-2]
+```
+
+```{r}
+vm[[1]]
+```
+
+```{r}
+# memanggil suku ke n dan n+k
+vm[c(1,3)]
+```
+
+```{r}
+# memanggil suku ke n hingga n+k
+vm[c(1:3)]
+```
+
+```{r}
+vm>'beng'
+```
+
+```{r}
+# Ini kenapa?
+vm[vm>'beng']
+```
+
+```{r}
+# Subseting kondisional
+vn<-c(1:11)
+vn
+```
+
+```{r}
+vn[vn>5]
+```
+
+```{r}
+vo <- list(a = c(3, 2, 0), b = 787, c = "Airbus 320")
+vo
+```
+
+```{r}
+vo[-2]
+vo
+```
+
+```{r}
+vo
+```
+
+```{r}
+vo[2]<-NULL
+vo
+```
+
+```{r}
+vo[3]<-4
+vo
+```
+
+```{r}
+vo[c(2,3)]=NULL
+vo
+```
+
+```{r}
+# Pembuktian bahwa vektor menyimpan elemen secara berurutan:
+urt1<-c("Kambing", "Ayam", "Ikan", "Itik")
+urt2<-c("Ikan","Kambing", "Ayam", "Itik")
+urt3<-c("Kambing", "Ayam", "Ikan", "Itik")
+```
+
+```{r}
+#Vektor 1 dan 3 dianggap sama karena memiliki susunan dan isi yang benar-benar sama
+all(urt1==urt3)
+urt1==urt3
+```
+
+```{r}
+#Vektor 2 dan 3 tidak dianggap sama karena memiliki susunan berbeda walaupun terdiri atas elemen yang benar-benar sama
+all(urt1==urt2)
+urt1==urt2
+```
+

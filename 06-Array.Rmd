@@ -1,0 +1,17 @@
+---
+title: An R Markdown document converted from "Array.ipynb"
+output: html_document
+---
+
+# Array
+***
+
+Array adalah vektor multidimensional. Semua elemennya harus berasal dari tipe yang sama.
+Perbedaan array dan matrice adalah matrice hanya dapat digunakan dua dimensi.
+
+```{r}
+aa<-array(1:24, dim=c(2,3,4))
+aa
+class(aa)
+```
+

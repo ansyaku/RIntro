@@ -1,0 +1,72 @@
+---
+title: "Some Important Thing in R"
+author: "Andreas Syaloom Kurniawan"
+date: "4/16/2021"
+output: html_document
+---
+
+# Settingan di R
+
+You can compile R code using R Studio, PyCharm, or using Jupyter Notebook that has been installed with IRKernel.
+
+## Package
+Some package is updated by the author on regular basis in their github repo. It's often that - when one author update his package (package x) (and the most update version has not available on CRAN repo), he use the updated version to update another r package (package y). This condition lead to an awkward condition, specially when package y has been available on CRAN, you take it to your project and after you install it, the system notify that you need package x to install package y. Meanwhile, package x has not been available in CRAN/conda/conda-forge.   
+
+## Dependencies
+It's normal if you want to install your package as soon as possible, but at the end of the day it can turn to a nightmare if you don't read the documentation of the package first. You must uninstall your package, kernel, or even anaconda.
+
+## IR Kernel
+If you use R from Jupyter Notebook, then the best way to install IR Kernel is using the procedure written in IR Kernel github. See: https://irkernel.github.io/installation/
+
+To make it easier i copied and pasted the command here.
+
+* Install R Studio <br/>
+Open your r studio, no need to open your jupyter first. Run this code on the console.
+```{instal irkernel}
+install.packages('IRkernel')
+```
+* Make the kernel available for jupyter <br/>
+Again use your console to run this command
+```{activate the kernel for jupyter}
+#for the current user only
+IRkernel::installspec()
+#for all user
+IRkernel::installspec(user = FALSE)
+```
+To know which r kernel are you use, you can use this command:
+```
+sessionInfo()
+```
+## Changing Root Folder
+
+Open cmd (or Anaconda Prompt) and run
+```
+jupyter notebook --generate-config.
+```
+This writes a file to
+```
+C:\Users\username\.jupyter\jupyter_notebook_config.py.
+```
+Browse to the file location and open it in an Editor
+
+Search for the following line in the file:
+```
+#c.NotebookApp.notebook_dir = ''
+```
+Replace by
+```
+c.NotebookApp.notebook_dir = '/the/path/to/home/folder/'
+```
+
+## Installing other package
+
+Cek dokumentasi di cran versi terakhir versi berapa. 
+Untuk install dari cran yang spesifik gunakan perintah sbb:
+```
+install.packages("tidyverse", repos='https://cloud.r-project.org/')
+```
+
+Waffle
+```
+install.packages("waffle", repos = "https://cinc.rud.is")
+```

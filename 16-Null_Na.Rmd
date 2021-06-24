@@ -1,0 +1,59 @@
+---
+title: NULL dan NA
+output: html_document
+---
+
+# NULL dan NA
+***
+* NULL represents the null or an empty object in R. 
+* NA represents a missing value in R. NA can be updated in R by vectors, list and other R objects 
+* whereas NULL cannot be coerced.
+
+```{r}
+typeof(NULL)
+```
+
+```{r}
+length(NULL)
+```
+
+```{r}
+is.null(1)
+```
+
+```{r}
+#c()
+```
+
+```{r}
+nu<-c(45,33,42,NA,12,12,22,11)
+nu
+```
+
+```{r}
+mean(nu)
+```
+
+```{r}
+#Rata-rata bila na dihilangkan
+mean(nu, na.rm=T)
+```
+
+```{r}
+ne<-c(45,33,42,NULL,12,12,22,11)
+ne
+mean(ne)
+```
+
+```{r}
+u<-NULL
+v<-NA
+u
+v
+```
+
+```{r}
+length(u)
+length(v)
+```
+

@@ -1,0 +1,227 @@
+---
+title: "Memasukkan Data ke R"
+author: "Andreas Syaloom Kurniawan"
+date: "4/16/2021"
+output: html_document
+---
+
+# Membaca Data
+
+------------------------------------------------------------------------
+
+-   **read.table**, **read.csv** untuk membaca data tabular (read.csv identik dengan read.table kecuali separatornya adalah koma sedangkan read.table separatornya spasi).
+-   **readLines** untuk membaca baris per baris pada file teks
+-   **source** untuk membaca file R code (inverse of dump)
+-   **dget** untuk membaca file R code (inverse of dput)
+-   **load** untuk membaca pada workspace yang disimpan
+-   **unserialize** untuk membaca satu R objek dalam bentuk biner
+
+Argumen-argumen pada fungsi read.table: \* **file**, nama fie/koneksi \* **header**, logikal mengindikasikan apakah file memiliki baris header \* **sep** \* **colClasses** \* **nrows**, jumlah baris pada dataset \* **comment.char** \* **skip**, jumlah baris yang dilewatkan dari awal \* **stringsAsFactors**
+
+Jika besar dataset\> besar RAM gak usah dilanjutin.
+
+```{r}
+x<-c("Kabanjahe","Medan","Siantar", "Samosir","Balige","Labuhan Batu","Padang Sidempuan","Rantau Prapat")
+y<-list(TRUE,FALSE,TRUE,TRUE,TRUE,FALSE,TRUE,FALSE)
+z<-c(1,2,3,4,5,6,7,8,9,0)
+dump(c("x","y","z"), file="contoh_file_dump.R")
+```
+
+Koneksi ke file: \*\*\*
+
+-   **file** membuka koneksi ke file
+-   **gzfile** membuka koneksi ke file yang dikompres dalam bentuk gzip
+-   **bzfile** membuka koneksi ke file yang dikompres dalam bentuk bzip2
+-   **url** membuka koneksi ke webpage
+
+```{r}
+#con<-file()
+#data<-read.csv()
+#close(con)
+```
+
+```{r}
+library(help="datasets")
+```
+
+```{r}
+head(ChickWeight)
+```
+
+Consider the data set ice.river, which is in the contributed package tseries by Trapletti and Hornik (2013). First, you have to install the package, which you can do by running the line install.packages("tseries")
+
+```{r}
+#install.packages("tseries")
+#library("tseries")
+```
+
+```{r}
+#library(help="tseries")
+```
+
+```{r}
+#data<-read.csv("MRI.csv", header=FALSE)
+#head(data)
+```
+
+```{r}
+# data.url<-read.table("http://courses.washington.edu/b517/Datasets/BirthsKingCounty2001.txt", fill = TRUE)
+# head(data.url, n=2)
+```
+
+## Perolehan Data dari Internet
+
+------------------------------------------------------------------------
+
+Penting untuk diperhatikan: Perolehan data dari internet secara langsung menghindarkan kita dari kesalahan ketik data (bila harus diketik ulang). Namun, penting untuk diingat data dari internet bisa berubah-ubah untuk itu perlu untuk membuat catatan data yang diperoleh itu diambil per kapan. Adapun cara untuk mengambil data dari internet secara langsung adalah sebagai berikut:
+
+```{r}
+# Cari url dimana data tersedia, setelah itu gunakan perintah browseURL
+# untuk memastikan bahwa perangkat anda terkoneksi ke internet dan link unduh data tersebut berfungsi
+# perintah ini akan membuka jendela baru
+# browseURL("https://archive.ics.uci.edu/ml/")
+```
+
+```{r}
+# Gunakan perintah download.file(url, nama text file yang mau disimpan) untuk mengunduh data langsung ke folder root
+# web="https://archive.ics.uci.edu/ml/machine-learning-databases/auto-mpg/auto-mpg.data"
+# download.file(web, "Testing.txt")
+```
+
+## Perintah Read Tabel
+
+------------------------------------------------------------------------
+
+```{r}
+#read.table("file",
+#  header = FALSE,
+#  sep = "",
+#  quote = "\"'",
+#  dec = ".",
+#  row.names, col.names,            
+#  na.strings = "NA",
+#  fill = !blank.lines.skip,
+#  skipNul = FALSE)
+```
+
+Beberapa yang penting:
+
+1.  **filename** - Nama file
+2.  **sep** - pemisah antar kolom
+3.  **skipNul** tipe: logical: , apakah kolom berisi NULL diabaikan
+4.  **fill** tipe: logical. If TRUE then in case the rows have unequal length, blank fields are implicitly added. See 'Details'.
+5.  **nrows** integer: jumlah baris yang ingin dibaca
+6.  **na.strings** a character vector of strings which are to be interpreted as NA values. Blank fields are also considered to be missing values in logical, integer, numeric and complex fields. Note that the test happens after white space is stripped from the input, so na.strings values may need their own white space stripped in advance.
+7.  **col.names** vektor yang berisikan nama (opsional) bagi variabel.
+8.  **dec** karakter yang digunakan sebagai pemisah untuk desimal
+
+## Perintah Read CSV
+
+------------------------------------------------------------------------
+
+```{r}
+# read_csv(
+#  "filename",
+#  sep = ",",
+#  na.strings = c("NA", "-"),
+#  comment.char = "#",
+#  transpose = FALSE,
+#  rownames_included = TRUE
+#)
+```
+
+Keterangan :
+
+1.  **filename** - Nama file
+2.  **sep** - pemisah antar kolom
+3.  **na.string** - na mau diganti apa
+4.  **transpose**
+5.  **rownames_included**
+
+# Menggunakan __readr__ dan __fread__
+
+## readr
+Readr merupakan salah satu paket (bisa digunakan dengan memanggil readr atau memanggil tidyverse). 
+
+```{r, template readr, eval=FALSE}
+read_delim(
+  file,
+  delim,
+  quote = "\"",
+  escape_backslash = FALSE,
+  escape_double = TRUE,
+  col_names = TRUE,
+  col_types = NULL,
+  locale = default_locale(),
+  na = c("", "NA"),
+  quoted_na = TRUE,
+  comment = "",
+  trim_ws = FALSE,
+  skip = 0,
+  n_max = Inf,
+  guess_max = min(1000, n_max),
+  progress = show_progress(),
+  skip_empty_rows = TRUE
+)
+
+read_csv(
+  file,
+  col_names = TRUE,
+  col_types = NULL,
+  locale = default_locale(),
+  na = c("", "NA"),
+  quoted_na = TRUE,
+  quote = "\"",
+  comment = "",
+  trim_ws = TRUE,
+  skip = 0,
+  n_max = Inf,
+  guess_max = min(1000, n_max),
+  progress = show_progress(),
+  skip_empty_rows = TRUE
+)
+```
+
+Tidak perlu menspesifikasi lagi __header=TRUE__, __stringsAsFactor=TRUE__, karena secara defaul readr sudah mengakomodasi itu. Readr akan mengkonversi data ke dalam bentuk tibble. 
+
+```{r, baca data readr, results = 'hold'}
+library(tidyverse)
+mtcars <- read_csv(readr_example("mtcars.csv"))
+```
+Dapat dilihat, saat kita memanggil suatu data dengan readr (read_csv), maka akan ditampilkan tipe dari setiap kolom yang ada.
+
+Selain itu, kita bisa juga melakukan skip terhadap baris ke sekian hingga sekian, misalkan ambil dari baris ke 7 hingga 17. Ini dilakukan dengan parameter  __skip__ dan __n_max__.
+
+
+```{r, limitasi row, include=TRUE, results = 'hold'}
+mtcars <- read_csv("mtcars.csv", skip = 2, n_max = 17)
+head(mtcars)
+```
+Ada beberapa macam perintah pemanggilan yang dapat digunakan untuk readr, antara lain:
+
+```{jenis baca data dengan readr}
+# fungsinya mirip dengan read.delim di base r
+read_delim
+# fungsinya mirip dengan read.csv di base r
+read_csv
+# untuk mebaca tab separated value
+read_tsv
+```
+## fread
+
+fread ditulis oleh Matt Dowle dan Arun Srinivasan. Fread dapat dilihat pada  https://github.com/Rdatatable/data.table
+
+```{r, fread-default, eval=FALSE}
+fread(input, file, text, cmd, sep="auto", sep2="auto", dec=".", quote="\"",
+nrows=Inf, col.names,
+check.names=FALSE, encoding="unknown",
+strip.white=TRUE, fill=FALSE, blank.lines.skip=FALSE)
+# lengkapnya bs dilihat di dokumentasi fread
+```
+
+Fread dapat dipanggil dengan:
+```{r, panggil, include=TRUE, results = 'hold'}
+library(data.table)
+k22<-fread("mtcars.csv", nrows=5)
+head(k22)
+```

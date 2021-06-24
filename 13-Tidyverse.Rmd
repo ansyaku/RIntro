@@ -1,0 +1,33 @@
+---
+title: An R Markdown document converted from "Tidyverse.ipynb"
+output: html_document
+---
+
+# Tidyverse
+
+```{r}
+#install.packages("tidyverse")
+#library(tidyverse)
+```
+
+```{r}
+#myTib<-tibble(x=1:4,
+#             y=c("London","Paris","Madrid","Lisbon"))
+#myTib
+```
+
+```{r}
+#class(myTib)
+```
+
+```{r}
+#ty<-data.frame(x=1:5, y=c("Airbus", "Boeing", "Tupolev", "Ilyushin", "Bombardier"))
+#ty
+#class(ty)
+```
+
+```{r}
+#tyToTib<-as_tibble(ty)
+#tyToTib
+#class(tyToTib)
+```

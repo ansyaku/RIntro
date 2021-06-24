@@ -1,0 +1,7 @@
+---
+title: An R Markdown document converted from "Conditional.ipynb"
+output: html_document
+---
+# Conditional
+
+Kondisikonal adalah

@@ -1,0 +1,63 @@
+---
+title: An R Markdown document converted from "Factor.ipynb"
+output: html_document
+---
+
+# Factor
+***
+
+Digunakan untuk merepresentasikan data kategorikal atau ordinal.
+* Factor bisa unordered atau ordered.
+* Factor ini menyimpan informasi lain disebut __Levels__ yang merupakan informasi elemen unik yang ada pada factor beserta urutannya.
+Factor bisa dibayangkan sebagai vector integer yang memiliki label.
+
+```{r, fa, include=TRUE, results='hold'}
+fa<-factor(c("iya","enggak","enggak","enggak","iya","enggak","iya"))
+fa
+```
+Perhatikan level nya, hanya ada dua yakni "iya" dan "enggak".
+Apabila kita ingin mengetahui rekapan dari isi faktor bisa menggunakan perintah berikut:
+```{r, tabelfa, include=TRUE, results='hold'}
+table(fa)
+```
+Kategori yang ada pada level tersebut sebenarnya disimpan dalam bentuk integer, seperti bisa dilihat pada hasil panggilan berikut:
+```{r, unclas, include=TRUE, results='hold'}
+unclass(fa)
+# iya disimbolkan sebagai 2, enggak sebagai 1
+```
+
+```{r}
+#attr(,"levels")
+```
+
+Kita bisa menentukan levelnya, siapa yang pertama siapa yang kedua, dst. Hal ini dilakukan dengan mendefinisikan level, sbb:
+```{r, deflvl, include=TRUE, results='hold'}
+fb<-factor(c("iya","enggak","enggak","enggak","iya","enggak","iya"), levels=c("iya","enggak"))
+fb
+```
+
+```{r}
+unclass(fb)
+# Jika levelsnya ditentukan, maka yang pertama akan dikoding menjadi lebih awal dari yang kedua
+```
+
+```{r}
+fa1<-factor(c("SD", "SMP", "SMA", "SMP"), levels=c("SD", "SMP", "SMA"))
+fa2<-factor(c("SD", "SMP", "SMA", "SMP"), levels=c("SD", "SMP", "SMA", "PT"))
+fa3<-factor(c("SD", "SMP", "SMA", "SMP", "SD", "SD","SMA","SD"), levels=c("SD", "SMP", "SMA", "PT"), ordered=TRUE)
+```
+
+```{r}
+fa1
+```
+
+```{r}
+# Kita bisa menambah levels walaupun data terkait levels itu belum ada, 
+# fungsinya kita bisa saja suatu saat menambah anggota fa2 tanpa perlu mengubah levels
+fa2
+```
+
+```{r}
+#Di sini levels telah berurut
+fa3
+```

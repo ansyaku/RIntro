@@ -1,0 +1,150 @@
+---
+title: "Ggplot"
+author: "Andreas Syaloom Kurniawan"
+date: "4/24/2021"
+output: html_document
+---
+
+Notes:
+sbse - akronim dari saya belum sempat eksplorasi
+# Pemahaman Paket ggplot
+
+Ggplot terdiri dari tiga bagian utama :
+* data di sini data biasanya diambil dari format data frame, bisa berbentuk data frame biasa, tibble ataupun tribble. Namun, di dalam dokumentasi dikatakan bahwa ggplot juga bisa menerima data dalam format lain (*sbse).
+* aes merupakan kepanjangan dari aestethic mapping, biasanya disini diterakan sumbu x, sumbu y, dan beberapa elemen lain (dibahas di bagian selanjutnya).
+* geom_xxx merupakan bagian terakhir dari ggplot, di sini tidak harus geom_point, ada banyak bentuk yang bisa digunakan.
+
+```{xamenamed}
+geom_point(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "identity",
+  ...,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
+```
+
+untuk bagian aesnya r, ggplot memahami:
+
+```
+x
+
+y
+
+alpha
+
+colour
+
+fill
+
+group
+
+shape
+
+size
+
+stroke
+
+```
+
+## colour
+
+Ingat nulisnya "colour" versi british bukan versi american english color.
+Colour yang tersedia adalah sebagai berikut:
+
+## fill
+
+## group
+
+## shape
+
+## size
+
+## stroke
+
+
+```{rm}
+head(diamonds)
+```
+
+```{rn}
+diamonds_c1<-ggplot(data = diamonds,
+                    mapping = aes(x = carat, y = price, colour = clarity)) +
+                    geom_point()
+diamonds_c1
+```
+
+```{ro}
+diamonds_c2 <-
+  ggplot(data = diamonds) +
+  geom_point(mapping = aes(x = carat, y = price, colour = clarity))
+```
+
+```{rp}
+diamonds_c2
+```
+
+```{rql}
+diamonds_c3 <-ggplot()+
+    geom_point(
+        data=diamonds,
+        mapping=aes(x = carat, y = price, colour = clarity)
+    )
+diamonds_c3
+```
+
+```{ty}
+summary(diamonds_c1)
+summary(diamonds_c2)
+summary(diamonds_c3)
+```
+
+Tiga komponen dasar dalam pembuatan grafik yaitu:
+* __Data__, yaitu data berisi informasi yang akan dibuat grafik
+* __Mapping__, yaitu penentuan variabel/kolom yang akan ditampilkan dalam grafik
+* __Geometries__, yaitu representasi visual dari variabel/kolom dalam grafik
+
+qplot(<MAPPING>, data = <DATA>, geom = <GEOM>)
+
+```{rr}
+#ggplot(data = <DATA>, mapping = aes(<MAPPINGS>)) +
+#  <GEOM_FUNCTION>()
+```
+
+```{rt}
+#ggplot(data = <DATA>) +
+#  <GEOM_FUNCTION>(mapping = aes(<MAPPINGS>))
+```
+
+```{ry}
+#ggplot() +
+#  <GEOM_FUNCTION>(data = <DATA>, mapping = aes(<MAPPINGS>)
+```
+
+```{rda}
+Delapan Komponen Dalam Grafik
+Selain tiga komponen dasar yang sebelumnya telah disinggung, dalam konsep Grammar of Graphic terdapat lima komponen utama lainnya yang berperan penting dalam pembuatan sebuah grafik. Berikut merupakan delapan komponen dalam grafik:
+
+Data
+Mapping
+Statistic
+Scales
+Geometries
+Facets
+Coordinates
+Theme
+```
+
+df<-data.frame(
+    x=c(3,1,5),
+    y=c(2,4,6),
+    label=c("a","b","c")
+)
+p<-ggplot(df,aes(x,y,label=label))+
+    labs(x=NULL, y=NULL)+
+    theme(plot.title=element_text(size=12))
+p+geom_point()+ggtitle("point")
+```

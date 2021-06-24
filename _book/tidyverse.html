@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Bab 17 Tidyverse | NULL dan NA</title>
+  <meta name="description" content="Bab 17 Tidyverse | NULL dan NA" />
+  <meta name="generator" content="bookdown 0.22 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Bab 17 Tidyverse | NULL dan NA" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Bab 17 Tidyverse | NULL dan NA" />
+  
+  
+  
+
+<meta name="author" content="Andreas Syaloom Kurniawan" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="grouping.html"/>
+<link rel="next" href="null-dan-na.html"/>
+<script src="libs/header-attrs-2.7/header-attrs.js"></script>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Selamat Datang di Semua Tentang R</a></li>
+<li class="chapter" data-level="" data-path="pengantar.html"><a href="pengantar.html"><i class="fa fa-check"></i>Pengantar</a></li>
+<li class="chapter" data-level="1" data-path="settingan-di-r.html"><a href="settingan-di-r.html"><i class="fa fa-check"></i><b>1</b> Settingan di R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="settingan-di-r.html"><a href="settingan-di-r.html#package"><i class="fa fa-check"></i><b>1.1</b> Package</a></li>
+<li class="chapter" data-level="1.2" data-path="settingan-di-r.html"><a href="settingan-di-r.html#dependencies"><i class="fa fa-check"></i><b>1.2</b> Dependencies</a></li>
+<li class="chapter" data-level="1.3" data-path="settingan-di-r.html"><a href="settingan-di-r.html#ir-kernel"><i class="fa fa-check"></i><b>1.3</b> IR Kernel</a></li>
+<li class="chapter" data-level="1.4" data-path="settingan-di-r.html"><a href="settingan-di-r.html#changing-root-folder"><i class="fa fa-check"></i><b>1.4</b> Changing Root Folder</a></li>
+<li class="chapter" data-level="1.5" data-path="settingan-di-r.html"><a href="settingan-di-r.html#installing-other-package"><i class="fa fa-check"></i><b>1.5</b> Installing other package</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="membaca-data.html"><a href="membaca-data.html"><i class="fa fa-check"></i><b>2</b> Membaca Data</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="membaca-data.html"><a href="membaca-data.html#perolehan-data-dari-internet"><i class="fa fa-check"></i><b>2.1</b> Perolehan Data dari Internet</a></li>
+<li class="chapter" data-level="2.2" data-path="membaca-data.html"><a href="membaca-data.html#perintah-read-tabel"><i class="fa fa-check"></i><b>2.2</b> Perintah Read Tabel</a></li>
+<li class="chapter" data-level="2.3" data-path="membaca-data.html"><a href="membaca-data.html#perintah-read-csv"><i class="fa fa-check"></i><b>2.3</b> Perintah Read CSV</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="menggunakan-readr-dan-fread.html"><a href="menggunakan-readr-dan-fread.html"><i class="fa fa-check"></i><b>3</b> Menggunakan <strong>readr</strong> dan <strong>fread</strong></a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="menggunakan-readr-dan-fread.html"><a href="menggunakan-readr-dan-fread.html#readr"><i class="fa fa-check"></i><b>3.1</b> readr</a></li>
+<li class="chapter" data-level="3.2" data-path="menggunakan-readr-dan-fread.html"><a href="menggunakan-readr-dan-fread.html#fread"><i class="fa fa-check"></i><b>3.2</b> fread</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="vektor.html"><a href="vektor.html"><i class="fa fa-check"></i><b>4</b> Vektor</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="vektor.html"><a href="vektor.html#membuat-vector"><i class="fa fa-check"></i><b>4.1</b> Membuat Vector</a></li>
+<li class="chapter" data-level="4.2" data-path="vektor.html"><a href="vektor.html#operasi-aritmatika-vector"><i class="fa fa-check"></i><b>4.2</b> Operasi aritmatika vector</a></li>
+<li class="chapter" data-level="4.3" data-path="vektor.html"><a href="vektor.html#coercion"><i class="fa fa-check"></i><b>4.3</b> Coercion</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="list.html"><a href="list.html"><i class="fa fa-check"></i><b>5</b> LIST</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="list.html"><a href="list.html#membuat-list"><i class="fa fa-check"></i><b>5.1</b> Membuat List</a></li>
+<li class="chapter" data-level="5.2" data-path="list.html"><a href="list.html#memberi-nama-elemen-list"><i class="fa fa-check"></i><b>5.2</b> Memberi Nama Elemen List</a></li>
+<li class="chapter" data-level="5.3" data-path="list.html"><a href="list.html#mengakses-list"><i class="fa fa-check"></i><b>5.3</b> Mengakses List</a></li>
+<li class="chapter" data-level="5.4" data-path="list.html"><a href="list.html#memanipulasi-isi-list"><i class="fa fa-check"></i><b>5.4</b> Memanipulasi Isi List</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="factor.html"><a href="factor.html"><i class="fa fa-check"></i><b>6</b> Factor</a></li>
+<li class="chapter" data-level="7" data-path="matrices.html"><a href="matrices.html"><i class="fa fa-check"></i><b>7</b> Matrices</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="matrices.html"><a href="matrices.html#subsetting-a-matrix"><i class="fa fa-check"></i><b>7.1</b> 2. Subsetting a Matrix</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="array.html"><a href="array.html"><i class="fa fa-check"></i><b>8</b> Array</a></li>
+<li class="chapter" data-level="9" data-path="fungsi-sprintf.html"><a href="fungsi-sprintf.html"><i class="fa fa-check"></i><b>9</b> Fungsi Sprintf</a></li>
+<li class="chapter" data-level="10" data-path="conditional.html"><a href="conditional.html"><i class="fa fa-check"></i><b>10</b> Conditional</a></li>
+<li class="chapter" data-level="11" data-path="looping.html"><a href="looping.html"><i class="fa fa-check"></i><b>11</b> Looping</a></li>
+<li class="chapter" data-level="12" data-path="loop.html"><a href="loop.html"><i class="fa fa-check"></i><b>12</b> LOOP</a></li>
+<li class="chapter" data-level="13" data-path="data-frames.html"><a href="data-frames.html"><i class="fa fa-check"></i><b>13</b> Data Frames</a></li>
+<li class="chapter" data-level="14" data-path="memanggil-data-frame.html"><a href="memanggil-data-frame.html"><i class="fa fa-check"></i><b>14</b> 2. Memanggil Data Frame</a></li>
+<li class="chapter" data-level="15" data-path="wrangling.html"><a href="wrangling.html"><i class="fa fa-check"></i><b>15</b> WRANGLING</a>
+<ul>
+<li class="chapter" data-level="15.1" data-path="wrangling.html"><a href="wrangling.html#colour"><i class="fa fa-check"></i><b>15.1</b> colour</a></li>
+<li class="chapter" data-level="15.2" data-path="wrangling.html"><a href="wrangling.html#fill"><i class="fa fa-check"></i><b>15.2</b> fill</a></li>
+<li class="chapter" data-level="15.3" data-path="wrangling.html"><a href="wrangling.html#group"><i class="fa fa-check"></i><b>15.3</b> group</a></li>
+<li class="chapter" data-level="15.4" data-path="wrangling.html"><a href="wrangling.html#shape"><i class="fa fa-check"></i><b>15.4</b> shape</a></li>
+<li class="chapter" data-level="15.5" data-path="wrangling.html"><a href="wrangling.html#size"><i class="fa fa-check"></i><b>15.5</b> size</a></li>
+<li class="chapter" data-level="15.6" data-path="wrangling.html"><a href="wrangling.html#stroke"><i class="fa fa-check"></i><b>15.6</b> stroke</a></li>
+</ul></li>
+<li class="chapter" data-level="16" data-path="grouping.html"><a href="grouping.html"><i class="fa fa-check"></i><b>16</b> Grouping</a></li>
+<li class="chapter" data-level="17" data-path="tidyverse.html"><a href="tidyverse.html"><i class="fa fa-check"></i><b>17</b> Tidyverse</a>
+<ul>
+<li class="chapter" data-level="17.1" data-path="tidyverse.html"><a href="tidyverse.html#colour-1"><i class="fa fa-check"></i><b>17.1</b> colour</a></li>
+<li class="chapter" data-level="17.2" data-path="tidyverse.html"><a href="tidyverse.html#fill-1"><i class="fa fa-check"></i><b>17.2</b> fill</a></li>
+<li class="chapter" data-level="17.3" data-path="tidyverse.html"><a href="tidyverse.html#group-1"><i class="fa fa-check"></i><b>17.3</b> group</a></li>
+<li class="chapter" data-level="17.4" data-path="tidyverse.html"><a href="tidyverse.html#shape-1"><i class="fa fa-check"></i><b>17.4</b> shape</a></li>
+<li class="chapter" data-level="17.5" data-path="tidyverse.html"><a href="tidyverse.html#size-1"><i class="fa fa-check"></i><b>17.5</b> size</a></li>
+<li class="chapter" data-level="17.6" data-path="tidyverse.html"><a href="tidyverse.html#stroke-1"><i class="fa fa-check"></i><b>17.6</b> stroke</a></li>
+</ul></li>
+<li class="chapter" data-level="18" data-path="null-dan-na.html"><a href="null-dan-na.html"><i class="fa fa-check"></i><b>18</b> NULL dan NA</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">NULL dan NA</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="tidyverse" class="section level1" number="17">
+<h1><span class="header-section-number">Bab 17</span> Tidyverse</h1>
+<div class="sourceCode" id="cb538"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb538-1"><a href="tidyverse.html#cb538-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages(&quot;tidyverse&quot;)</span></span>
+<span id="cb538-2"><a href="tidyverse.html#cb538-2" aria-hidden="true" tabindex="-1"></a><span class="co">#library(tidyverse)</span></span></code></pre></div>
+<div class="sourceCode" id="cb539"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb539-1"><a href="tidyverse.html#cb539-1" aria-hidden="true" tabindex="-1"></a><span class="co">#myTib&lt;-tibble(x=1:4,</span></span>
+<span id="cb539-2"><a href="tidyverse.html#cb539-2" aria-hidden="true" tabindex="-1"></a><span class="co">#             y=c(&quot;London&quot;,&quot;Paris&quot;,&quot;Madrid&quot;,&quot;Lisbon&quot;))</span></span>
+<span id="cb539-3"><a href="tidyverse.html#cb539-3" aria-hidden="true" tabindex="-1"></a><span class="co">#myTib</span></span></code></pre></div>
+<div class="sourceCode" id="cb540"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb540-1"><a href="tidyverse.html#cb540-1" aria-hidden="true" tabindex="-1"></a><span class="co">#class(myTib)</span></span></code></pre></div>
+<div class="sourceCode" id="cb541"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb541-1"><a href="tidyverse.html#cb541-1" aria-hidden="true" tabindex="-1"></a><span class="co">#ty&lt;-data.frame(x=1:5, y=c(&quot;Airbus&quot;, &quot;Boeing&quot;, &quot;Tupolev&quot;, &quot;Ilyushin&quot;, &quot;Bombardier&quot;))</span></span>
+<span id="cb541-2"><a href="tidyverse.html#cb541-2" aria-hidden="true" tabindex="-1"></a><span class="co">#ty</span></span>
+<span id="cb541-3"><a href="tidyverse.html#cb541-3" aria-hidden="true" tabindex="-1"></a><span class="co">#class(ty)</span></span></code></pre></div>
+<div class="sourceCode" id="cb542"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb542-1"><a href="tidyverse.html#cb542-1" aria-hidden="true" tabindex="-1"></a><span class="co">#tyToTib&lt;-as_tibble(ty)</span></span>
+<span id="cb542-2"><a href="tidyverse.html#cb542-2" aria-hidden="true" tabindex="-1"></a><span class="co">#tyToTib</span></span>
+<span id="cb542-3"><a href="tidyverse.html#cb542-3" aria-hidden="true" tabindex="-1"></a><span class="co">#class(tyToTib)</span></span></code></pre></div>
+
+<p>Notes:
+sbse - akronim dari saya belum sempat eksplorasi
+# Pemahaman Paket ggplot</p>
+<p>Ggplot terdiri dari tiga bagian utama :
+* data di sini data biasanya diambil dari format data frame, bisa berbentuk data frame biasa, tibble ataupun tribble. Namun, di dalam dokumentasi dikatakan bahwa ggplot juga bisa menerima data dalam format lain (<em>sbse).
+</em> aes merupakan kepanjangan dari aestethic mapping, biasanya disini diterakan sumbu x, sumbu y, dan beberapa elemen lain (dibahas di bagian selanjutnya).
+* geom_xxx merupakan bagian terakhir dari ggplot, di sini tidak harus geom_point, ada banyak bentuk yang bisa digunakan.</p>
+<pre class="xamenamed"><code>geom_point(
+  mapping = NULL,
+  data = NULL,
+  stat = &quot;identity&quot;,
+  position = &quot;identity&quot;,
+  ...,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)</code></pre>
+<p>untuk bagian aesnya r, ggplot memahami:</p>
+<pre><code>x
+
+y
+
+alpha
+
+colour
+
+fill
+
+group
+
+shape
+
+size
+
+stroke
+</code></pre>
+<div id="colour-1" class="section level2" number="17.1">
+<h2><span class="header-section-number">17.1</span> colour</h2>
+<p>Ingat nulisnya “colour” versi british bukan versi american english color.
+Colour yang tersedia adalah sebagai berikut:</p>
+</div>
+<div id="fill-1" class="section level2" number="17.2">
+<h2><span class="header-section-number">17.2</span> fill</h2>
+</div>
+<div id="group-1" class="section level2" number="17.3">
+<h2><span class="header-section-number">17.3</span> group</h2>
+</div>
+<div id="shape-1" class="section level2" number="17.4">
+<h2><span class="header-section-number">17.4</span> shape</h2>
+</div>
+<div id="size-1" class="section level2" number="17.5">
+<h2><span class="header-section-number">17.5</span> size</h2>
+</div>
+<div id="stroke-1" class="section level2" number="17.6">
+<h2><span class="header-section-number">17.6</span> stroke</h2>
+<pre class="rm"><code>head(diamonds)</code></pre>
+<pre class="rn"><code>diamonds_c1&lt;-ggplot(data = diamonds,
+                    mapping = aes(x = carat, y = price, colour = clarity)) +
+                    geom_point()
+diamonds_c1</code></pre>
+<pre class="ro"><code>diamonds_c2 &lt;-
+  ggplot(data = diamonds) +
+  geom_point(mapping = aes(x = carat, y = price, colour = clarity))</code></pre>
+<pre class="rp"><code>diamonds_c2</code></pre>
+<pre class="rql"><code>diamonds_c3 &lt;-ggplot()+
+    geom_point(
+        data=diamonds,
+        mapping=aes(x = carat, y = price, colour = clarity)
+    )
+diamonds_c3</code></pre>
+<pre class="ty"><code>summary(diamonds_c1)
+summary(diamonds_c2)
+summary(diamonds_c3)</code></pre>
+<p>Tiga komponen dasar dalam pembuatan grafik yaitu:
+* <strong>Data</strong>, yaitu data berisi informasi yang akan dibuat grafik
+* <strong>Mapping</strong>, yaitu penentuan variabel/kolom yang akan ditampilkan dalam grafik
+* <strong>Geometries</strong>, yaitu representasi visual dari variabel/kolom dalam grafik</p>
+<p>qplot(<MAPPING>, data = <DATA>, geom = <GEOM>)</p>
+<pre class="rr"><code>#ggplot(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)) +
+#  &lt;GEOM_FUNCTION&gt;()</code></pre>
+<pre class="rt"><code>#ggplot(data = &lt;DATA&gt;) +
+#  &lt;GEOM_FUNCTION&gt;(mapping = aes(&lt;MAPPINGS&gt;))</code></pre>
+<pre class="ry"><code>#ggplot() +
+#  &lt;GEOM_FUNCTION&gt;(data = &lt;DATA&gt;, mapping = aes(&lt;MAPPINGS&gt;)</code></pre>
+<pre class="rda"><code>Delapan Komponen Dalam Grafik
+Selain tiga komponen dasar yang sebelumnya telah disinggung, dalam konsep Grammar of Graphic terdapat lima komponen utama lainnya yang berperan penting dalam pembuatan sebuah grafik. Berikut merupakan delapan komponen dalam grafik:
+
+Data
+Mapping
+Statistic
+Scales
+Geometries
+Facets
+Coordinates
+Theme</code></pre>
+<p>df&lt;-data.frame(
+x=c(3,1,5),
+y=c(2,4,6),
+label=c(“a”,“b”,“c”)
+)
+p&lt;-ggplot(df,aes(x,y,label=label))+
+labs(x=NULL, y=NULL)+
+theme(plot.title=element_text(size=12))
+p+geom_point()+ggtitle(“point”)</p>
+<pre><code>
+&lt;!--chapter:end:14-ggplot.Rmd--&gt;
+
+---
+title: An R Markdown document converted from &quot;TanggalWaktu.ipynb&quot;
+output: html_document
+---
+
+# Tanggal dan Waktu di R
+***
+
+| Code | Value |
+| --- | --- | 
+| %d | Day of the month (number) |
+| %m | Month (decimal number)| 
+| %b | Month (abbreviated)|
+| %B | Month (full name) |
+| %y | Year (2 digit)| 
+| %Y | Year (4 digit) |
+
+* Date objects are stored as the number of days since January 1, 1970, using negative numbers for earlier dates. 
+* The __as.numeric__ function can be used to convert a __Date__ object to its internal form
+
+
+```r
+#as.Date(&quot;2020/04/15&quot;)</code></pre>
+<div class="sourceCode" id="cb556"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb556-1"><a href="tidyverse.html#cb556-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.Date</span>(<span class="st">&quot;2020-04-15&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;2020-04-15&quot;</code></pre>
+<div class="sourceCode" id="cb558"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb558-1"><a href="tidyverse.html#cb558-1" aria-hidden="true" tabindex="-1"></a><span class="co">#as.Date(&quot;2020/15/04&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb559"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb559-1"><a href="tidyverse.html#cb559-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.Date</span>(<span class="st">&quot;2020/15/04&quot;</span>, <span class="at">format=</span><span class="st">&#39;%Y/%d/%m&#39;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;2020-04-15&quot;</code></pre>
+<div class="sourceCode" id="cb561"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb561-1"><a href="tidyverse.html#cb561-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.Date</span>(<span class="st">&quot;2020 August, 04&quot;</span>, <span class="at">format=</span><span class="st">&#39;%Y %B, %d&#39;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;2020-08-04&quot;</code></pre>
+<div class="sourceCode" id="cb563"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb563-1"><a href="tidyverse.html#cb563-1" aria-hidden="true" tabindex="-1"></a>tanggal<span class="ot">&lt;-</span><span class="fu">as.Date</span>(<span class="st">&quot;May 30, 93&quot;</span>, <span class="at">format=</span><span class="st">&#39;%B %d, %y&#39;</span>)</span>
+<span id="cb563-2"><a href="tidyverse.html#cb563-2" aria-hidden="true" tabindex="-1"></a>tanggal</span></code></pre></div>
+<pre><code>## [1] &quot;1993-05-30&quot;</code></pre>
+<div class="sourceCode" id="cb565"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb565-1"><a href="tidyverse.html#cb565-1" aria-hidden="true" tabindex="-1"></a>konversi<span class="ot">&lt;-</span><span class="fu">as.numeric</span>(tanggal)</span>
+<span id="cb565-2"><a href="tidyverse.html#cb565-2" aria-hidden="true" tabindex="-1"></a>konversi</span></code></pre></div>
+<pre><code>## [1] 8550</code></pre>
+<div class="sourceCode" id="cb567"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb567-1"><a href="tidyverse.html#cb567-1" aria-hidden="true" tabindex="-1"></a>tanggal1<span class="ot">&lt;-</span><span class="fu">as.Date</span>(<span class="st">&quot;30/05/1993&quot;</span>, <span class="at">format=</span><span class="st">&#39;%d/%m/%Y&#39;</span>)</span>
+<span id="cb567-2"><a href="tidyverse.html#cb567-2" aria-hidden="true" tabindex="-1"></a>tanggal2<span class="ot">&lt;-</span><span class="fu">as.Date</span>(<span class="st">&quot;18/03/2021&quot;</span>, <span class="at">format=</span><span class="st">&#39;%d/%m/%Y&#39;</span>)</span>
+<span id="cb567-3"><a href="tidyverse.html#cb567-3" aria-hidden="true" tabindex="-1"></a>tanggal1</span></code></pre></div>
+<pre><code>## [1] &quot;1993-05-30&quot;</code></pre>
+<div class="sourceCode" id="cb569"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb569-1"><a href="tidyverse.html#cb569-1" aria-hidden="true" tabindex="-1"></a>tanggal2</span></code></pre></div>
+<pre><code>## [1] &quot;2021-03-18&quot;</code></pre>
+<div class="sourceCode" id="cb571"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb571-1"><a href="tidyverse.html#cb571-1" aria-hidden="true" tabindex="-1"></a>tanggal2<span class="sc">-</span>tanggal1</span></code></pre></div>
+<pre><code>## Time difference of 10154 days</code></pre>
+<div class="sourceCode" id="cb573"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb573-1"><a href="tidyverse.html#cb573-1" aria-hidden="true" tabindex="-1"></a><span class="fu">difftime</span>(tanggal2, tanggal1, <span class="at">units=</span><span class="st">&quot;weeks&quot;</span>)</span></code></pre></div>
+<pre><code>## Time difference of 1450.571 weeks</code></pre>
+<div class="sourceCode" id="cb575"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb575-1"><a href="tidyverse.html#cb575-1" aria-hidden="true" tabindex="-1"></a><span class="fu">difftime</span>(tanggal2, tanggal1, <span class="at">units=</span><span class="st">&quot;hours&quot;</span>)</span></code></pre></div>
+<pre><code>## Time difference of 243696 hours</code></pre>
+<div class="sourceCode" id="cb577"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb577-1"><a href="tidyverse.html#cb577-1" aria-hidden="true" tabindex="-1"></a>h<span class="ot">&lt;-</span>tanggal2<span class="sc">-</span>tanggal1</span></code></pre></div>
+<div class="sourceCode" id="cb578"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb578-1"><a href="tidyverse.html#cb578-1" aria-hidden="true" tabindex="-1"></a>u<span class="ot">&lt;-</span>h<span class="sc">/</span><span class="dv">365</span></span>
+<span id="cb578-2"><a href="tidyverse.html#cb578-2" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(u, <span class="st">&quot;units&quot;</span>)<span class="ot">=</span><span class="st">&quot;years&quot;</span></span>
+<span id="cb578-3"><a href="tidyverse.html#cb578-3" aria-hidden="true" tabindex="-1"></a>u</span></code></pre></div>
+<pre><code>## Time difference of 27.81918 years</code></pre>
+<div class="sourceCode" id="cb580"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb580-1"><a href="tidyverse.html#cb580-1" aria-hidden="true" tabindex="-1"></a><span class="co">#https://www.youtube.com/watch?v=IbvBbyg-Nz4</span></span></code></pre></div>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="grouping.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="null-dan-na.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["rwiki.pdf", "rwiki.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

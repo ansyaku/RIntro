@@ -1,0 +1,230 @@
+---
+title: An R Markdown document converted from "List.ipynb"
+output: html_document
+---
+
+# LIST
+***
+Vektor yang semua elemennya memiliki tipe data yang sama disebut *__atomic vector__*, <br>.
+*__List__* mirip dengan vektor namun elemen-elemennya boleh terdiri dari beberapa tipe data.
+
+## Membuat List
+***
+
+```{r, makema, include=TRUE, results = 'hold'}
+ma<-list(1,'ayam', TRUE, 1+2i )
+ma
+typeof(ma)
+```
+Membuat list dengan series (barisan bilangan)
+```{r, makembmc, include=TRUE, results = 'hold'}
+mb<-list(letters[1:3])
+mb
+mc<-list(1:7)
+mc
+```
+Membuat list dengan series (barisan bilangan dengan faktor pertumbuhan tertentu)
+```{r, makemd, include=TRUE, results = 'hold'}
+#Contoh: series dimulai dari 1 maksimum 11 dengan pertambahan 3
+md<-list(seq(1, 11, by=3))
+md
+typeof(md)
+```
+List juga dapat dibuat dari vektor-vektor lain
+```{r, makeme, include=TRUE, results = 'hold'}
+#List dapat dibuat dari 3 vektor integer, character, dan boolean
+me<-c(1:3)
+typeof(me)
+mf<-c("ayam","ikan","tempe","tahu")
+mg<-c(TRUE, FALSE, TRUE, TRUE)
+mh<-list(me,mf,mg)
+mh
+typeof(mh)
+```
+
+List dapat dibuat dari list-list lain (merging list)
+```{r, makelists, include=TRUE, results = 'hold'}
+mi<-list('dolar','yen','rupiah','renmimbi')
+mj<-list(14000,3500,14300,350)
+mk<-list(mi,mj)
+mk
+typeof(mk)
+```
+
+## Memberi Nama Elemen List
+***
+
+```{r}
+# MEMBERI NAMA LIST
+# Pada list ini elemen list diberi nama gt, rt, dan nt
+ml <- list(sibirong = matrix(1:6, nrow = 2), 
+          sibontar = letters[3:5], 
+          sigerger = c(1:5)) 
+ml
+```
+
+```{r}
+names(ml)
+```
+
+```{r}
+mm<- list(a="one", b="two", c=c(1:3))
+names(mm)
+```
+
+```{r}
+#Melakukan assign nama dengan jumlah yang sama dengan jumlah nama awal
+names(mm) <- c("sada", "dua", "tolu")
+print(mm)
+```
+
+```{r}
+mn<- list("bata","carvil",letters[1:3])
+print(mn)
+names(mn)
+```
+
+```{r}
+#Melakukan assign nama ke satu list, dengan jumlah anggota sama dengan nama
+names(mn)<-c("par","pir","per")
+print(mn)
+```
+
+```{r}
+#Melakukan assign nama ke satu list, dengan jumlah nama kurang dari jumlah anggota
+names(mn)<-c("psr","ptr")
+print(mn)
+names(mn)
+```
+
+```{r}
+#Melakukan assign nama ke satu list, dengan jumlah nama lebih dari jumlah anggota [FAILED]
+#names(mn)<-c("psr","ptr","ppr","pkr")
+#print(mn)
+#names(mn)
+```
+
+## Mengakses List
+***
+Misalkan terdapat suatu list
+```{r, lista, include=TRUE, results='hold'}
+mo<-list("kuda",'ayam','anjing','babi')
+mp<-list(a="kuda", b=x<-c(1,2,3), c="TRUE")
+str(mo)
+str(mp)
+```
+
+Mengakses elemen kedua dari list
+```{r, elemen2, include=TRUE, results='hold'}
+#mengakses elemen kedua
+mo[2]
+mp[2]
+```
+
+```{r}
+mo[[2]]
+mp[[2]]
+```
+Mengakses elemen k hingga ke n+k
+```{r, akslist, include=TRUE, results='hold'}
+mo[c(1,4)]
+mp[c(1,2)]
+```
+
+```{r}
+#Bagaimana mengakses isi list yang ada di dalam list ?
+```
+
+## Memanipulasi Isi List
+***
+
+```{r}
+ x[[2]][1]='susu'
+ x
+```
+
+```{r}
+x[c(2, 4)]
+```
+
+```{r}
+print(x)
+```
+
+```{r}
+print(x[2])
+```
+
+```{r}
+#ka$gt<-list('7','1','7','1','6')
+#ka
+```
+
+```{r}
+# Cara lain memberi nama gt, rt, dan nt
+#ka <- list(matrix(1:6, nrow = 2), 
+#          letters[3:5], 
+ #         c(1:5)) 
+#names(ka) <- c("Maruhum", "Bonar", "Sirait")
+#ka
+```
+
+```{r}
+#Add an element at the end of the list.
+#ka[4] <- list("Nubie","Bontar Muka", "Kumis Bolon")
+```
+
+```{r}
+#ka
+```
+
+```{r}
+#Converting List to Vector
+```
+
+```{r}
+#modify a list in R?
+```
+
+```{r}
+
+# Add element at the end of the list.
+#list_data[4] <- "New element"
+#print(list_data[4])
+
+# Remove the last element.
+#list_data[4] <- NULL
+
+# Print the 4th Element.
+#print(list_data[4])
+
+# Update the 3rd Element.
+```
+
+**Subsetting**
+***
+
+```{r}
+x<-c('Miami',"Chicago", "New York", "Massacushets")
+x[2]
+x[1:3]
+x[x>"Chicago"]
+```
+
+```{r}
+y<-list(makrobar=1:6, bar=0.7)
+y
+```
+
+```{r}
+y[1]
+```
+
+```{r}
+y[2]
+```
+
+```{r}
+y[["makrobar"]]
+y
+```

@@ -1,0 +1,8 @@
+book_filename: "rwiki.Rmd"
+toc-title: "Daftar Isi"
+chapter_name: "Bab "
+delete_merged_file: true
+download: ["pdf", "epub"]
+output:
+  bookdown::html_book:
+    theme: cosmo
